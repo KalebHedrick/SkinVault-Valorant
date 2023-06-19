@@ -1,42 +1,63 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { useState, useEffect, useRef } from 'react';
-import {FetchAllWeaponsData, FetchWeaponbyUUID} from './fetchData.js';
-import { createWeaponObject } from './weaponObject.js';
-import GLOBALS from '../Globals';
+import {FetchAllWeaponsData, FetchWeaponbyUUID, save, getValueFor} from './fetchData.js';
+import * as SecureStore from 'expo-secure-store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { DefaultWeaponsScreen } from './defaultPanel';
 export const AppRun = () => { //Called when the app starts from the main app file. Executes chain of functions to initialize and fetch api.
-    //const allWeapons = useRef([])
-    const mainData = apiDataArray();
-  for(const element of mainData) {
-    console.log(element.displayName + " UUID: " + element.uuid);
-    const newWeapon = createWeaponObject(apiWeaponDataArray(element.UUID));
-   // allWeapons.current.push(newWeapon);
-   GLOBALS.weaponArray.push(newWeapon);
+    const [fetching, isFetching] = useState(true);
+    const [Loading, isLoading] = useState(true);
+    useEffect( () => {
+      if (fetching) { 
+        
+     let doneFetching;
+     apiDataArray().then(res => {doneFetching = res}).then(res => {
+      if (doneFetching) {
+        isFetching(false);
+       }
+       else {
+        console.log("failed to fetch startup data");
+       }
+     })
+      }
+      else {
+        getValueFor("allData").then(res => { 
+          res = JSON.parse(res);
+          res = res.data;
+        for(const element of res) {
+          console.log(element.displayName + " UUID: " + element.uuid);
+          save(element.displayName, element.uuid);
+          
+      }
+     
+    }).then(res => {
+      isLoading(false)
+      });
   }
-  return (
-    <Text>wowzers</Text>
-  )
+  }, [fetching]);
+    let results;
+    if (Loading) {
+      results = <Text>Loading</Text>
+    }
+    else {
+      results = <DefaultWeaponsScreen/>
+    }
+  return results;
 }
 
-export const apiDataArray = () => { //returns array of all weapon content 
-    const aRef = useRef([]);
-    useEffect(() => {
+async function apiDataArray() { //returns array of all weapon content 
         
         const weaponsJson = FetchAllWeaponsData(); // call some api
-            weaponsJson.then(json => {aRef.current = json.data});
-       
-    }, []);
-    return aRef.current;
+            weaponsJson.then(json => {save('allData',(json))}).then(
+        console.log("Weapon Data saved Locally"));
+    return true;
 }
 
 
   export const apiWeaponDataArray = (UUID) => { //returns array of weapon content given UUID
-    const aRef = useRef([]);
-    useEffect(() => {
-        
+  
         const weaponsJson = FetchWeaponbyUUID(UUID); // call some api
-            weaponsJson.then(json => {aRef.current = json.data});
-       
-    }, []);
-    return aRef.current;
+        weaponsJson.then(json => {save(UUID,(json))}).then(
+          console.log(UUID + " Data saved Locally"));
+    return true;
 }
