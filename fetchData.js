@@ -90,7 +90,7 @@ export async function getValueFor(key) { //returns data from storage
     return await result;
   }
   else {
-    
-    getValueFor(key);
+    alert("Invalid data key, reload app");
+    //getValueFor(key);
   }
 }

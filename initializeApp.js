@@ -11,7 +11,6 @@ const AppRun = ({navigation}) => { //Called when the app starts from the main ap
     apiDataArray().then(() => {
     console.log("finished async")
    getValueFor('allData').then((res) =>{
-   console.log(res + " parse Value");
         res = JSON.parse(res);
         res = res.data;
         for (const element of res) {
@@ -48,9 +47,6 @@ async function apiDataArray() { //returns array of all weapon content
   const weaponsJson = await FetchAllWeaponsData();
   console.log("saving");
   return await save('allData', (weaponsJson));
-//FetchAllWeaponsData().then(json => { save('allData', (json)) }).then(() =>{
- //   console.log("Weapon Data saved Locally")
-  //  return true;});
   
 }
 
