@@ -1,35 +1,56 @@
 import { StyleSheet, Text, View,ScrollView,Button, Image, FlatList, TouchableOpacity } from 'react-native';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import {getValueFor} from '../fetchData.js';
 import React from "react";
-import { Dimensions } from 'react-native';
+import { Dimensions, } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import appColors from '../assets/appColors.js';
+import JsonQuery from 'json-query';
+import { FetchWeaponbyUUID } from '../fetchData.js';
+import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 const windowHeight = Dimensions.get('window').height;
 
-const SkinScreen = props => {
-    const weaponName = props.item;
-    const [uuid, Setuuid] = useState([]);
+const SkinsScreen = props => {
+  const isFocused = useIsFocused()
+const [weaponName, setWeaponName] = useState("Initial")
+const [uuid, Setuuid] = useState([]);
+
+useEffect( () => {
+  if (isFocused) {
+    getValueFor("currentState").then(res => setWeaponName(res)).then(console.log("confirm"))
+  }
+   },[isFocused])
     useEffect( () => {
-    getValueFor("allData").then(res => { 
-      
-        res = JSON.parse(res);
-        res = res.data;
+    getValueFor(weaponName.replaceAll('"','')).then(res => {return FetchWeaponbyUUID(res)}).then((res) => {
+        
+        res = res.data.skins;
+     
+        
         const tempUuid = [];
         let rowSide = 0;
       for(const element of res) {
-          tempUuid.push({name:element.displayName,icon:element.displayIcon});
+        let skinName = element.displayName;
+        let iconPNG = element.displayIcon;
+        if (iconPNG == null) {
+          console.log(skinName);
+         iconPNG = element.levels[0].displayIcon
+        }
+       if(element.contentTierUuid != null)
+        {
+          tempUuid.push({name:element.displayName,icon:iconPNG});
+        }
         }
         
     Setuuid(tempUuid);})
-    },[])
+},[weaponName])
     if (uuid.length == 0) { return <View><Text>Loading</Text></View>}
     else {
    
    return (
     <SafeAreaView style = {sty.container}>
     <View style = {{alignItems: "center"}}>
-    <Text style= {{fontFamily:"RobotMain", color: appColors.RED, fontSize: 33,padding: 15, borderBottomWidth: 5, borderColor: appColors.WHITE}}>SELECT A WEAPON</Text>
+    <Text style= {{fontFamily:"RobotMain", color: appColors.RED, fontSize: 33,
+    padding: 15, borderBottomWidth: 5, borderColor: appColors.WHITE}}>{weaponName.replaceAll('"','')} skins</Text>
     </View>
     <FlatList
     data={uuid}
@@ -41,12 +62,12 @@ const SkinScreen = props => {
     padding = {10}
     ItemSeparatorComponent={() => <View style={{height: 10}} />}
     renderItem={({item}) => <Tile name = {item.name} icon = {item.icon}/>}
-    //keyExtractor={element => element?.uuid}
+    
   /></SafeAreaView>
     )
     }
 }
-export default HomeScreen;
+export default SkinsScreen;
 const sty = StyleSheet.create({
     square: {width: "31.5%",height: 100, backgroundColor: appColors.RED, padding: 10, elevation: 10,
        marginRight: 10, borderRadius: 15, alignItems: "center",marginBottom: 10},

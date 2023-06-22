@@ -26,9 +26,11 @@ export const FetchAllWeaponsData = async () => { //Return a promise with all wea
 };
 
 export const FetchWeaponbyUUID = async (WUUID) => { //Return a promise with all weapon data
+  const url = "https://valorant-api.com/v1/weapons/".concat(WUUID.replaceAll('"',''))
+  console.log(url);
     try {
         const response = await fetch(
-          'https://valorant-api.com/v1/weapons/' + WUUID,
+          url,
             {
             headers: {
                 'Accept': 'application/json',
