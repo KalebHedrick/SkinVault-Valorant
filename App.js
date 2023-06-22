@@ -11,26 +11,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { createContext } from 'react';
 
-// Import your screen components
+// Screen components
 import HomeScreen from './screens/HomeScreen';
 import AppRun from './initializeApp';
 import SkinsScreen from './screens/SkinsScreen';
 
-// Context
-
-/**
- * debug tool to easily view keys in local storage
- */
-seeAsyncStorage = async() => {       
-AsyncStorage.getAllKeys((err, keys) => {
-  console.log(keys);
-/**
- * debug tool to easiy clear data in local storage
- */
-});}
-clearAsyncStorage = async() => {
-    AsyncStorage.clear();
-}
 //FONTS
 let customFonts = {
   'RobotMain': require('./assets/fonts/RobotoMono-VariableFont_wght.ttf'),
@@ -98,3 +83,18 @@ const DrawerContent = ({ navigation }) => {
     
   );
 };
+
+/**
+ * debug tool to easily view keys in local storage
+ */
+seeAsyncStorage = async() => {       
+  AsyncStorage.getAllKeys((err, keys) => {
+    console.log(keys);
+    
+  /**
+   * debug tool to easiy clear data in local storage
+   */
+  });}
+  clearAsyncStorage = async() => {
+      AsyncStorage.clear();
+  }
