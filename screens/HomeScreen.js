@@ -1,11 +1,15 @@
 import { StyleSheet, Text, View,ScrollView,Button, Image, FlatList, TouchableOpacity } from 'react-native';
-import { useState, useEffect, useRef } from 'react';
-import {getValueFor} from '../fetchData.js';
+import { useState, useEffect, useRef, useContext } from 'react';
+import {getValueFor, save} from '../fetchData.js';
 import React from "react";
 import { Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer'
 import appColors from '../assets/appColors.js';
+import SkinsScreen from './SkinsScreen.js';
 const windowHeight = Dimensions.get('window').height;
+let selector;
 const HomeScreen = ({navigation}) => {
   
     const [uuid, Setuuid] = useState([]);
@@ -57,9 +61,11 @@ const sty = StyleSheet.create({
     
   });
   const Tile = props => {
+    const navigation = useNavigation();
+    let result = <SkinsScreen item = {props.name}/>
     return (
-      
-      <TouchableOpacity style = {sty.square}>
+     
+    <TouchableOpacity style = {sty.square} onPressOut={() => {save("currentState",props.name).then(navigation.navigate("Skins")) }}>
         <Text style = {{fontFamily: "RobotMain", color: appColors.BLACK}}>{props.name}</Text>
         <Image
         style={sty.tinyLogo}
