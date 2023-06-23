@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View,ScrollView,Button, Image, FlatList, TouchableOpacity } from 'react-native';
-import { useState, useEffect, useContext } from 'react';
-import {getValueFor} from '../fetchData.js';
+import { useState, useEffect, useContext, useRef } from 'react';
+import {addVaultSkin, checkVaultSkin, deleteVaultSkin, getValueFor} from '../fetchData.js';
 import React from "react";
 import { Dimensions, } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -9,8 +9,9 @@ import JsonQuery from 'json-query';
 import { FetchWeaponbyUUID } from '../fetchData.js';
 import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 import {Loading} from './LoadingScreen.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const windowHeight = Dimensions.get('window').height;
-
+let rand = 0;
 const SkinsScreen = props => {
   const isFocused = useIsFocused()
 const [weaponName, setWeaponName] = useState("Initial")
@@ -18,15 +19,17 @@ const [loadedSkins, setLoadedSkins] = useState([]);
 
 useEffect( () => {
   if (isFocused) {
+    console.log("hellosdvfsfsfsvsvsd");
     setLoadedSkins([])
     getValueFor("currentState").then(res => setWeaponName(res))
   }
    },[isFocused])
     useEffect( () => {
+      const skins_loading = [];
       if (weaponName != "Initial") {
     getValueFor(weaponName.replaceAll('"','')).then(res => {return FetchWeaponbyUUID(res)}).then((res) => {
         res = res.data.skins;
-        const skins_loading = [];
+        
       for(const element of res) {
         let skinName = element.displayName;
         let iconPNG = element.displayIcon;
@@ -36,13 +39,18 @@ useEffect( () => {
         }
        if(element.contentTierUuid != null)
         {
-          skins_loading.push({name:element.displayName,icon:iconPNG, SkinUuid:element.uuid});
+          checkVaultSkin(element.uuid).then(checkOwned => {
+            console.log("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
+          skins_loading.push({name:element.displayName,icon:iconPNG, SkinUuid:element.uuid, isOwned: checkOwned});
+          })
         }
-        }
-        
+        }})
         setLoadedSkins(skins_loading)
-      }
-      )}},[weaponName])
+       
+      
+        
+      
+      }},[weaponName])
     if (loadedSkins.length == 0) { return <Loading/>}
     else {
    
@@ -58,10 +66,10 @@ useEffect( () => {
     borderLeftWidth={10}
     borderRightWidth={10}
     borderColor = {appColors.BLACK}
-    flex = {0}
+    flex = {1}
     padding = {10}
     ItemSeparatorComponent={() => <View style={{height: 10}} />}
-    renderItem={({item}) => <Tile name = {item.name} icon = {item.icon} SkinUuid = {item.SkinUuid} />}
+    renderItem={({item}) => <Tile name = {item.name} icon = {item.icon} SkinUuid = {item.SkinUuid} isOwned = {item.isOwned} />}
     
   /></SafeAreaView>
     )
@@ -78,15 +86,39 @@ const sty = StyleSheet.create({
   });
   const Tile = props => {
     const [owned, setOwned] = useState(false);
-    let tileColor = appColors.RED;
-    if (owned) { 
-      tileColor = "green";
+    const firstLoad = useRef(true);
+    let tileColor = appColors.RED
+  useEffect( () => {
+    if (firstLoad.current)
+     {
+      if (props.isOwned == true) {
+        tileColor = appColors.GREEN;
+      }
+      else {
+        tileColor = appColors.RED;
+      }
+      firstLoad.current = false;
     }
-    sty.square.backgroundColor = tileColor;
+    else {
+    if (owned) {               //add skin conditional
+      tileColor = appColors.GREEN
+      addVaultSkin(props.SkinUuid);
+      vdata().then(res => console.log(res));
+
+    }
+    else {                     //delete skin conditional
+      rand++
+      tileColor = appColors.RED;
+      deleteVaultSkin(props.SkinUuid);
+      vdata().then(res => console.log(res));
+    }
+  }
+},[owned])
+  sty.square.backgroundColor = tileColor;
     return (
       
-      <TouchableOpacity style = {sty.square} onPress={() => {setOwned(!owned);  }} >
-        <Text style = {{fontFamily: "RobotMain", color: appColors.BLACK}}>{props.name}</Text>
+      <TouchableOpacity style = {sty.square} onPress={() => {setOwned(!owned)}} >
+        <Text style = {{fontFamily: "RobotMain"}}>{props.name}</Text>
         <Image
         style={sty.tinyLogo}
         source={{
@@ -97,3 +129,6 @@ const sty = StyleSheet.create({
       
     )
   }
+async function vdata() {
+  return await getValueFor("Vault");
+}

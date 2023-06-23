@@ -9,7 +9,7 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerI
 import appColors from '../assets/appColors.js';
 import SkinsScreen from './SkinsScreen.js';
 const windowHeight = Dimensions.get('window').height;
-let selector;
+
 const HomeScreen = ({navigation}) => {
   
     const [uuid, Setuuid] = useState([]);
@@ -19,7 +19,7 @@ const HomeScreen = ({navigation}) => {
         res = JSON.parse(res);
         res = res.data;
         const tempUuid = [];
-        let rowSide = 0;
+        
       for(const element of res) {
           tempUuid.push({name:element.displayName,icon:element.displayIcon});
         }
@@ -65,7 +65,7 @@ const sty = StyleSheet.create({
     let result = <SkinsScreen item = {props.name}/>
     return (
      
-    <TouchableOpacity style = {sty.square} onPressOut={() => {save("currentState",props.name).then(navigation.navigate("Skins")) }}>
+    <TouchableOpacity style = {sty.square} onPress={() => {save("currentState",props.name).then(navigation.navigate("Skins")) }}>
         <Text style = {{fontFamily: "RobotMain", color: appColors.BLACK}}>{props.name}</Text>
         <Image
         style={sty.tinyLogo}

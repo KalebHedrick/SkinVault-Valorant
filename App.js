@@ -68,8 +68,8 @@ const DrawerContent = ({ navigation }) => {
         end={{x:1,y:1}}
       >
 
-      <Text style={{ fontSize: 24, padding: 30,fontFamily: "RobotMain_BOLD" }}>
-        ValSkin.gg
+      <Text style={{ fontSize: 29, padding: 35,fontFamily: "RobotMain_BOLD" }}>
+        SkinVault: Valorant
       </Text>
       <TouchableOpacity onPress={clearAsyncStorage}><Text style={{ fontSize: 24, padding: 20,fontFamily: "RobotMain" }}>Tutorial</Text></TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("Skins")}><Text style={{ fontSize: 24, padding: 20,fontFamily: "RobotMain" }}>Owned</Text></TouchableOpacity>
