@@ -1,4 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+/******************************************************
+ * 
+ * FETCH FUNCTIONS FOR THE API
+ ******************************************************/
 export const FetchAllWeaponsData = async () => { //Return a promise with all weapons
     try {
         const response = await fetch(
@@ -79,20 +83,91 @@ export const FetchWeaponSkinbyUUID = async (WUUID) => { //Return a promise with 
       FetchWeaponSkinbyUUID(WUUID);
     }
 };
-
+/***********************************************************
+ * 
+ * Storage save and retrieve async functions
+ * 
+ *
+ **********************************************************/
 export async function save(key, value) { //saves data to storage
 
  return await AsyncStorage.setItem(key,JSON.stringify(value));
 }
-
-export async function getValueFor(key) { //returns data from storage
+export async function saveString(key, value) {
+  return await AsyncStorage.setItem(key,value);
+}
+export async function getValueFor(key, retries) { //returns data from storage
   let result = await AsyncStorage.getItem(key);
   if (typeof result === 'string' || result instanceof String) {
     console.log("data with key: " + key + " retrieved from local storage");
     return await result;
   }
   else {
-    
-    getValueFor(key);
+    if (retries == 0) {
+      console.log("Data value not be found");
+      return false;
+    }
+    if (typeof(retries) == undefined) {
+      getValueFor(key, 1);
+    }
+    else {
+    getValueFor(key, retries - 1);
+    }
   }
 }
+/*********************************************************** */
+export async function checkVaultSkins() {
+  checkVault = () => {
+getValueFor("Vault",2).then(res => {
+  if (!res || typeof(res) == undefined) {
+    saveString("Vault","noData");
+  }
+}).then(() => {return true})
+}
+return await checkVault();
+}
+export async function addVaultSkin(skinUUID) {
+  addSkin= () => {
+  getValueFor("Vault",3).then(res => {
+    let newVault
+    if (res == "noData") {
+       newVault = skinUUID;
+    }
+    else {
+   newVault = res.concat("," + skinUUID);
+    }
+    saveString("Vault",newVault);
+  })
+}
+return await addSkin(skinUUID);
+}
+export async function deleteVaultSkin(skinUUID) {
+  deleteSkin = () => {
+    getValueFor("Vault",3).then(res => {
+    let dataArray = res.split(",");
+    dataArray = dataArray.filter(e => e !== skinUUID);
+    let newData;
+    if (dataArray.length == 0) {
+      newData = "noData";
+    }
+    else {
+    newData = dataArray.join(",");
+    }
+     saveString("Vault",newData);
+    })
+  }
+  return await deleteSkin(skinUUID);
+}
+export async function checkVaultSkin(skinUUID) { //returns true if 'skinUUID' exists in vault, false otherwise
+   checkSkin =async () => {
+      let dataArray = await getValueFor("Vault",1)
+      dataArray = dataArray.split(",")
+      for(const element of dataArray) {
+        if(element == skinUUID) {
+          return true;
+        }
+      }
+      return false;
+    }
+     return await checkSkin();
+  }
