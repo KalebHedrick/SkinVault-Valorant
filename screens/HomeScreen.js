@@ -1,80 +1,34 @@
 import { StyleSheet, Text, View,ScrollView,Button, Image, FlatList, TouchableOpacity } from 'react-native';
-import { useState, useEffect, useRef, useContext } from 'react';
-import {getValueFor, save} from '../fetchData.js';
+import { useState, useEffect, useContext, useRef } from 'react';
+import {addVaultSkin, checkVaultSkin, deleteVaultSkin, getValueFor, getVaultSize} from '../fetchData.js';
 import React from "react";
-import { Dimensions } from 'react-native';
+import { Dimensions, } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer'
 import appColors from '../assets/appColors.js';
-import SkinsScreen from './SkinsScreen.js';
-const windowHeight = Dimensions.get('window').height;
+import JsonQuery from 'json-query';
+import { FetchWeaponbyUUID } from '../fetchData.js';
+import { NavigationContainer, useIsFocused } from '@react-navigation/native';
+import {Loading} from './LoadingScreen.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const HomeScreen = props => {
+  const isFocused = useIsFocused()
+const [loading, isLoading] = useState(true)
 
-const HomeScreen = ({navigation}) => {
-  
-    const [uuid, Setuuid] = useState([]);
+useEffect( () => {
+  if (isFocused) {
+   isLoading(false)
+  }
+   },[isFocused])
     useEffect( () => {
-    getValueFor("allData").then(res => { 
       
-        res = JSON.parse(res);
-        res = res.data;
-        const tempUuid = [];
-        
-      for(const element of res) {
-          tempUuid.push({name:element.displayName,icon:element.displayIcon});
-        }
-        
-    Setuuid(tempUuid);})
-    },[])
-    if (uuid.length == 0) { return <View><Text>Loading</Text></View>}
-    else {
-   
+     },[])
+      
+    if (loading) { return <Loading/>}
+     console.log(skinCount)
    return (
-    <SafeAreaView style = {sty.container}>
-    <View style = {{alignItems: "center"}}>
-    <Text style= {{fontFamily:"RobotMain", color: appColors.RED, fontSize: 33,
-    padding: 15, borderBottomWidth: 5, borderColor: appColors.WHITE}}>
-    SELECT A WEAPON</Text>
-    </View>
-    <FlatList
-    data={uuid}
-    numColumns={3}
-    borderLeftWidth={10}
-    borderRightWidth={10}
-    borderColor = {appColors.BLACK}
-    flex = {0}
-    padding = {10}
-    ItemSeparatorComponent={() => <View style={{height: 10}} />}
-    renderItem={({item}) => <Tile name = {item.name} icon = {item.icon}/>}
-    //keyExtractor={element => element?.uuid}
-  /></SafeAreaView>
+   <SafeAreaView><Text>{props.skinCount / props.totalSkins}</Text></SafeAreaView>
     )
-    }
+    
 }
 export default HomeScreen;
-const sty = StyleSheet.create({
-    square: {width: "31.5%",height: 100, backgroundColor: appColors.RED, padding: 10, elevation: 10,
-       marginRight: 10, borderRadius: 15, alignItems: "center",marginBottom: 10},
-
-    tinyLogo: {resizeMode: "contain", height: "100%", width: "100%", flex:1},
-    container: {backgroundColor: appColors.BLACK, flex: 1},
-    
-  });
-  const Tile = props => {
-    const navigation = useNavigation();
-    let result = <SkinsScreen item = {props.name}/>
-    return (
-     
-    <TouchableOpacity style = {sty.square} onPress={() => {save("currentState",props.name).then(navigation.navigate("Skins")) }}>
-        <Text style = {{fontFamily: "RobotMain", color: appColors.BLACK}}>{props.name}</Text>
-        <Image
-        style={sty.tinyLogo}
-        source={{
-          uri: props.icon,
-        }}
-      />
-      </TouchableOpacity>
-      
-    )
-  }
- 
+  

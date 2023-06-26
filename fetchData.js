@@ -116,7 +116,7 @@ export async function getValueFor(key, retries) { //returns data from storage
   }
 }
 /*********************************************************** */
-export async function checkVaultSkins() {
+export async function checkVaultSkins() { //initiates creation of vault if it does not already exist
   checkVault = () => {
 getValueFor("Vault",2).then(res => {
   if (!res || typeof(res) == undefined) {
@@ -171,3 +171,4 @@ export async function checkVaultSkin(skinUUID) { //returns true if 'skinUUID' ex
     }
      return await checkSkin();
   }
+  

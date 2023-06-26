@@ -13,9 +13,10 @@ import { createContext } from 'react';
 
 // Screen components
 import HomeScreen from './screens/HomeScreen';
+import WeaponScreen from './screens/WeaponScreen';
 import AppRun from './initializeApp';
 import SkinsScreen from './screens/SkinsScreen';
-
+import AboutScreen from './screens/AboutScreen';
 //FONTS
 let customFonts = {
   'RobotMain': require('./assets/fonts/RobotoMono-VariableFont_wght.ttf'),
@@ -46,8 +47,9 @@ const App = () => {
     >
     <Drawer.Screen name = "Startup" component = {AppRun} options = {{headerShown: false}}/>
     <Drawer.Screen name = "Home" component = {HomeScreen} options = {{headerShown: false}}/>
+    <Drawer.Screen name = "Weapons" component = {WeaponScreen} options = {{headerShown: false}}/>
     <Drawer.Screen name = "Skins" component = {SkinsScreen} options = {{headerShown: false}}/>
-    
+    <Drawer.Screen name = "About" component = {AboutScreen} options = {{headerShown: false}}/>
     </Drawer.Navigator>
     
     </NavigationContainer>
@@ -71,11 +73,11 @@ const DrawerContent = ({ navigation }) => {
       <Text style={{ fontSize: 29, padding: 35,fontFamily: "RobotMain_BOLD" }}>
         SkinVault: Valorant
       </Text>
-      <TouchableOpacity onPress={clearAsyncStorage}><Text style={{ fontSize: 24, padding: 20,fontFamily: "RobotMain" }}>Tutorial</Text></TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("Skins")}><Text style={{ fontSize: 24, padding: 20,fontFamily: "RobotMain" }}>Owned</Text></TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("Home")}><Text style={{ fontSize: 24, padding: 20,fontFamily: "RobotMain" }}>All Skins</Text></TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("Home")}><Text style={{ fontSize: 24, padding: 20,fontFamily: "RobotMain" }}>All Bundles</Text></TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("Home")}><Text style={{ fontSize: 24, padding: 20,fontFamily: "RobotMain" }}>About</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Home")}><Text style={{ fontSize: 24, padding: 20,fontFamily: "RobotMain" }}>Home</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Weapons")}><Text style={{ fontSize: 24, padding: 20,fontFamily: "RobotMain" }}>All Skins</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Bundles")}><Text style={{ fontSize: 24, padding: 20,fontFamily: "RobotMain" }}>All Bundles</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Settings")}><Text style={{ fontSize: 24, padding: 20,fontFamily: "RobotMain" }}>Settings</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("About")}><Text style={{ fontSize: 24, padding: 20,fontFamily: "RobotMain" }}>About</Text></TouchableOpacity>
       <TouchableOpacity onPress={clearAsyncStorage}><Text style={{ fontSize: 24, padding: 20,fontFamily: "RobotMain" }}>clear async</Text></TouchableOpacity>
       <TouchableOpacity onPress={seeAsyncStorage}><Text style={{ fontSize: 24, padding: 20,fontFamily: "RobotMain" }}>view local storage</Text></TouchableOpacity>
       </LinearGradient>
