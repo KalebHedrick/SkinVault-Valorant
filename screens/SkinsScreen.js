@@ -11,21 +11,21 @@ import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 import {Loading} from './LoadingScreen.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const windowHeight = Dimensions.get('window').height;
-let rand = 0;
 const SkinsScreen = props => {
   const isFocused = useIsFocused()
-const [weaponName, setWeaponName] = useState("Initial")
-const [loadedSkins, setLoadedSkins] = useState([]);
-
+const [weaponName, setWeaponName] = useState("Initial")  //current weapons page state
+const [loadedSkins, setLoadedSkins] = useState([]);      //array of all skins
+const [reload, hasReloaded] = useState(true);           //state for opening new skin page
+const [skinsReady, setSkinsReady] = useState(false);      //state for screen being ready to view
 useEffect( () => {
   if (isFocused) {
-    console.log("hellosdvfsfsfsvsvsd");
     setLoadedSkins([])
-    getValueFor("currentState").then(res => setWeaponName(res))
+    getValueFor("currentState").then(res => {setWeaponName(res)
+    hasReloaded(!reload); setSkinsReady(false)})
   }
    },[isFocused])
     useEffect( () => {
-      const skins_loading = [];
+      let skins_loading = [];
       if (weaponName != "Initial") {
     getValueFor(weaponName.replaceAll('"','')).then(res => {return FetchWeaponbyUUID(res)}).then((res) => {
         res = res.data.skins;
@@ -34,24 +34,19 @@ useEffect( () => {
         let skinName = element.displayName;
         let iconPNG = element.displayIcon;
         if (iconPNG == null) {
-          console.log(skinName);
          iconPNG = element.levels[0].displayIcon
         }
        if(element.contentTierUuid != null)
         {
           checkVaultSkin(element.uuid).then(checkOwned => {
-            console.log("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
           skins_loading.push({name:element.displayName,icon:iconPNG, SkinUuid:element.uuid, isOwned: checkOwned});
+          setLoadedSkins(skins_loading)
           })
         }
-        }})
-        setLoadedSkins(skins_loading)
-       
+        }}).then(setSkinsReady(true))
+      }},[reload])
       
-        
-      
-      }},[weaponName])
-    if (loadedSkins.length == 0) { return <Loading/>}
+    if (!skinsReady) { return <Loading/>}
     else {
    
    return (
@@ -77,7 +72,7 @@ useEffect( () => {
 }
 export default SkinsScreen;
 const sty = StyleSheet.create({
-    square: {width: "31.5%",height: 100, padding: 10, elevation: 10, backgroundColor: appColors.RED,
+    square: {width: "31.5%",height: 100, padding: 10, elevation: 10,
        marginRight: 10, borderRadius: 15, alignItems: "center",marginBottom: 10},
 
     tinyLogo: {resizeMode: "contain", height: "100%", width: "100%", flex:1},
@@ -85,39 +80,39 @@ const sty = StyleSheet.create({
     
   });
   const Tile = props => {
-    const [owned, setOwned] = useState(false);
+    const [owned, setOwned] = useState(props.isOwned);
     const firstLoad = useRef(true);
-    let tileColor = appColors.RED
+    const [tileColor,setTileColor] = useState(appColors.RED)
   useEffect( () => {
     if (firstLoad.current)
      {
       if (props.isOwned == true) {
-        tileColor = appColors.GREEN;
+        setTileColor(appColors.GREEN);
       }
       else {
-        tileColor = appColors.RED;
+        setTileColor(appColors.RED);
       }
       firstLoad.current = false;
     }
     else {
     if (owned) {               //add skin conditional
-      tileColor = appColors.GREEN
+      setTileColor(appColors.GREEN);
       addVaultSkin(props.SkinUuid);
       vdata().then(res => console.log(res));
 
     }
     else {                     //delete skin conditional
-      rand++
-      tileColor = appColors.RED;
+      setTileColor(appColors.RED);
       deleteVaultSkin(props.SkinUuid);
       vdata().then(res => console.log(res));
     }
   }
 },[owned])
-  sty.square.backgroundColor = tileColor;
+  
     return (
       
-      <TouchableOpacity style = {sty.square} onPress={() => {setOwned(!owned)}} >
+      <TouchableOpacity style = {{width: "31.5%",height: 100, padding: 10, elevation: 10,
+      marginRight: 10, borderRadius: 15, alignItems: "center",marginBottom: 10, backgroundColor: tileColor}} onPress={() => {setOwned(!owned)}} >
         <Text style = {{fontFamily: "RobotMain"}}>{props.name}</Text>
         <Image
         style={sty.tinyLogo}
@@ -128,6 +123,7 @@ const sty = StyleSheet.create({
       </TouchableOpacity>
       
     )
+      
   }
 async function vdata() {
   return await getValueFor("Vault");
