@@ -24,7 +24,6 @@ useEffect( () => {
      },[])
       
     if (loading) { return <Loading/>}
-     console.log(skinCount)
    return (
    <SafeAreaView><Text>{props.skinCount / props.totalSkins}</Text></SafeAreaView>
     )

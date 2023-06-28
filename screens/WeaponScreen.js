@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View,ScrollView,Button, Image, FlatList, TouchableOpacity } from 'react-native';
 import { useState, useEffect, useRef, useContext } from 'react';
-import {getValueFor, save} from '../fetchData.js';
+import {getValueFor, save} from '../fetchData'
 import React from "react";
 import { Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -8,6 +8,7 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer'
 import appColors from '../assets/appColors.js';
 import SkinsScreen from './SkinsScreen.js';
+import { PageHead } from '../displayComponents.js';
 const windowHeight = Dimensions.get('window').height;
 
 const WeaponScreen = ({navigation}) => {
@@ -31,11 +32,7 @@ const WeaponScreen = ({navigation}) => {
    
    return (
     <SafeAreaView style = {sty.container}>
-    <View style = {{alignItems: "center"}}>
-    <Text style= {{fontFamily:"RobotMain", color: appColors.RED, fontSize: 33,
-    padding: 15, borderBottomWidth: 5, borderColor: appColors.WHITE}}>
-    SELECT A WEAPON</Text>
-    </View>
+    <PageHead headText = "Select A Weapon"/>
     <FlatList
     data={uuid}
     numColumns={3}
@@ -54,7 +51,7 @@ const WeaponScreen = ({navigation}) => {
 export default WeaponScreen;
 const sty = StyleSheet.create({
     square: {width: "31.5%",height: 100, backgroundColor: appColors.RED, padding: 10, elevation: 10,
-       marginRight: 10, borderRadius: 15, alignItems: "center",marginBottom: 10},
+       marginRight: 10, borderRadius: 15, alignItems: "center",marginBottom: 1},
 
     tinyLogo: {resizeMode: "contain", height: "100%", width: "100%", flex:1},
     container: {backgroundColor: appColors.BLACK, flex: 1},
