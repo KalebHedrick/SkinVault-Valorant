@@ -11,6 +11,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { createContext } from 'react';
 import { Divider } from 'react-native-paper';
+import Ionicons from '@expo/vector-icons/Ionicons'
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 // Screen components
@@ -68,8 +69,9 @@ const DrawerContent = ({ navigation }) => {
         SkinVault
       </Text>
       <Divider style = {[sty.Divider, sty.topDivider]}/>
-      <TouchableOpacity onPress={() => navigation.navigate("Home")}><Text style={sty.DrawerButton}>HOME</Text></TouchableOpacity>
-      
+      <TouchableOpacity style = {sty.iconMerge} onPress={() => navigation.navigate("Home")}>
+      <Ionicons name="home-outline" size={(windowHeight+windowWidth)/47} color= {appColors.WHITE} /><Text style={sty.DrawerButton}> HOME</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("Weapons")}><Text style={sty.DrawerButton}>ALL SKINS</Text></TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("Bundles")}><Text style={sty.DrawerButton}>ALL BUNDLES</Text></TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("Vault")}><Text style={sty.DrawerButton}>VAULT</Text></TouchableOpacity>
@@ -84,10 +86,11 @@ const DrawerContent = ({ navigation }) => {
   </>);
 };
 const sty = StyleSheet.create({
-  DrawerButton: { fontSize: (windowHeight+windowWidth)/50, padding: 20,fontFamily: "RobotMain", color: appColors.WHITE, alignSelf: "center" },
+  DrawerButton: { fontSize: (windowHeight+windowWidth)/50,fontFamily: "RobotMain", color: appColors.WHITE, alignSelf: "center" },
   Divider: {width: (windowHeight+windowWidth)/10, height:(windowHeight+windowWidth)/200, backgroundColor: appColors.RED, justifyContent: "center", alignSelf: "center", borderRadius: 50},
   bottomDivider: {},
-  topDivider: {}
+  topDivider: {},
+  iconMerge: {flexDirection: "row", justifyContent: "center"}
 });
 /**
  * debug tool to easily view keys in local storage
