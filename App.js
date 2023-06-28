@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View,ScrollView,Button, SafeAreaView,Dimensions } from 'react-native';
+import { StyleSheet, Text, View,ScrollView,Button,Dimensions, StatusBar } from 'react-native';
 import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFonts} from "expo-font";
 import AppLoading from 'expo-app-loading';
@@ -10,6 +10,9 @@ import appColors from './assets/appColors'
 import { LinearGradient } from 'expo-linear-gradient';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { createContext } from 'react';
+import { Divider } from 'react-native-paper';
+const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get('window').width;
 // Screen components
 import HomeScreen from './screens/HomeScreen';
 import WeaponScreen from './screens/WeaponScreen';
@@ -17,14 +20,13 @@ import AppRun from './initializeApp';
 import SkinsScreen from './screens/SkinsScreen';
 import AboutScreen from './screens/AboutScreen';
 //FONTS
-
 let customFonts = {
   'RobotMain': require('./assets/fonts/RobotoMono-VariableFont_wght.ttf'),
-  'RobotMain_BOLD': require('./assets/fonts/RobotoMono-Bold.ttf'),
+  'RobotMain_BOLD': require('./assets/fonts/RobotoMono-LightItalic.ttf'),
 };
 
 const App = () => {
-  
+  StatusBar.setBarStyle(appColors.RED, true);
   // load fonts
     const [isLoaded] = useFonts(customFonts);
   if (!isLoaded) {
@@ -58,33 +60,35 @@ const App = () => {
 export default App;
 export const Drawer = createDrawerNavigator();
 const DrawerContent = ({ navigation }) => {
-  return (
+  return (<>
     
-    
-<LinearGradient style={{ position: "absolute", 
-       left:0,right: 0, top: 0,bottom: 0,
-        }}
-        colors={[appColors.RED, appColors.BLACK]}
-        start={{x:0.05,y:0.05}}
-        end={{x:1,y:1}}
-      >
-
-      <Text style={{ fontSize: 29, padding: 35,fontFamily: "RobotMain_BOLD" }}>
-        SkinVault: Valorant
+     <View style={{justifyContent: "space-evenly", flex:1, flexDirection:"column", backgroundColor: appColors.BLACK}}>
+      
+     <Text style={[sty.DrawerButton,{fontSize: (windowHeight+windowWidth)/33}]}>
+        SkinVault
       </Text>
-      <TouchableOpacity onPress={() => navigation.navigate("Home")}><Text style={{ fontSize: 24, padding: 20 }}>Home</Text></TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("Weapons")}><Text style={{ fontSize: 24, padding: 20 }}>All Skins</Text></TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("Bundles")}><Text style={{ fontSize: 24, padding: 20 }}>All Bundles</Text></TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("Settings")}><Text style={{ fontSize: 24, padding: 20,fontFamily: "RobotMain" }}>Settings</Text></TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("About")}><Text style={{ fontSize: 24, padding: 20,fontFamily: "RobotMain" }}>About</Text></TouchableOpacity>
-      <TouchableOpacity onPress={clearAsyncStorage}><Text style={{ fontSize: 24, padding: 20,fontFamily: "RobotMain" }}>clear async</Text></TouchableOpacity>
-      <TouchableOpacity onPress={seeAsyncStorage}><Text style={{ fontSize: 24, padding: 20,fontFamily: "RobotMain" }}>view local storage</Text></TouchableOpacity>
-      </LinearGradient>
+      <Divider style = {[sty.Divider, sty.topDivider]}/>
+      <TouchableOpacity onPress={() => navigation.navigate("Home")}><Text style={sty.DrawerButton}>HOME</Text></TouchableOpacity>
+      
+      <TouchableOpacity onPress={() => navigation.navigate("Weapons")}><Text style={sty.DrawerButton}>ALL SKINS</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Bundles")}><Text style={sty.DrawerButton}>ALL BUNDLES</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Vault")}><Text style={sty.DrawerButton}>VAULT</Text></TouchableOpacity>
+
+      <Divider   style = {[sty.Divider,sty.bottomDivider]}/>
+
+      <TouchableOpacity onPress={() => navigation.navigate("Settings")}><Text style={[sty.DrawerButton,{fontSize: (windowHeight+windowWidth)/68}]}>Settings</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("About")}><Text style={[sty.DrawerButton,{fontSize: (windowHeight+windowWidth)/68}]}>About</Text></TouchableOpacity>
+      </View>
   
     
-  );
+  </>);
 };
-
+const sty = StyleSheet.create({
+  DrawerButton: { fontSize: (windowHeight+windowWidth)/50, padding: 20,fontFamily: "RobotMain", color: appColors.WHITE, alignSelf: "center" },
+  Divider: {width: (windowHeight+windowWidth)/10, height:(windowHeight+windowWidth)/200, backgroundColor: appColors.RED, justifyContent: "center", alignSelf: "center", borderRadius: 50},
+  bottomDivider: {},
+  topDivider: {}
+});
 /**
  * debug tool to easily view keys in local storage
  */

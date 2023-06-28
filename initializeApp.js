@@ -4,17 +4,13 @@ import { FetchAllWeaponsData, FetchWeaponbyUUID, save, getValueFor, FetchWeaponS
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import WeaponScreen from './screens/WeaponScreen.js';
 import HomeScreen from './screens/HomeScreen.js';
-seeAsyncStorage = async() => {       
-  AsyncStorage.getAllKeys((err, keys) => {
-    console.log(keys);
-  })}
+import { useNavigation } from '@react-navigation/native';
 const AppRun = ({navigation}) => { //Called when the app starts from the main app file. Executes chain of functions to initialize and fetch api.
   const [Loading, isLoading] = useState(true); //state for loading the app
   const [skinsTotal, updateTotal] = useState(0);
   const [skinCount, setSkinCount] = useState(0)
   useEffect( () => {
     apiDataArray().then(() => {
-    console.log("finished async")
    getValueFor('allData').then((res) =>{ //store all data in local storage
     
         res = JSON.parse(res);
@@ -41,6 +37,8 @@ const AppRun = ({navigation}) => { //Called when the app starts from the main ap
     },[]);
   
   let results;
+  const nav = useNavigation();
+  nav.openDrawer();
   if (Loading) {
     results = <Text style = {{padding: 50, flex: 1}}>Loading</Text>
   }

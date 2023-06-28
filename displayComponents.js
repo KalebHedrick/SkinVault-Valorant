@@ -55,7 +55,7 @@ export const PageHead = ({  headText }) => {
     <View id = "page-header" style = {{ width: "100%", height: windowHeight/10, justifyContent: "center"}}>
     <Animated.View style = {scaleStyle}>
     <TouchableOpacity style = {{justifyContent: "center", alignSelf: "center"}} activeOpacity={0.8} onPress={() => navigation.openDrawer()} onPressIn={() =>setMenu(true)}
-    onPressOut={() =>setMenu(false)}><Text style= {{fontFamily:"RobotMain", color: appColors.RED, fontSize: (windowHeight/22),
+    onPressOut={() =>setMenu(false)}><Text style= {{fontFamily:"RobotMain", color: appColors.WHITE, fontSize: (windowHeight/22),
     padding: 0, position: "relative", right:6}}> {text}
     </Text></TouchableOpacity>
     </Animated.View>

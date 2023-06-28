@@ -11,6 +11,8 @@ import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 import {Loading} from './LoadingScreen.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PageHead } from '../displayComponents.js';
+const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get('window').width;
 const SkinsScreen = props => {
   const isFocused = useIsFocused()
 const [weaponName, setWeaponName] = useState("Initial")  //current weapons page state
@@ -110,7 +112,7 @@ const sty = StyleSheet.create({
       
       <TouchableOpacity style = {{width: "31.5%",height: 100, padding: 10, elevation: 10,
       marginRight: 10, borderRadius: 15, alignItems: "center",marginBottom: 10, backgroundColor: tileColor}} onPress={() => {setOwned(!owned)}} >
-        <Text style = {{fontFamily: "RobotMain", minWidth: "50%"}}>{props.name}</Text>
+        <Text style = {{fontFamily: "RobotMain", minWidth: "50%", color: appColors.WHITE, fontSize: (windowHeight+windowWidth)/120}}>{props.name}</Text>
         <Image
         style={sty.tinyLogo}
         source={{

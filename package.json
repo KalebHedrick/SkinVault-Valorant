@@ -28,6 +28,7 @@
     "react-native-gesture-handler": "~2.9.0",
     "react-native-global-props": "^1.1.5",
     "react-native-linear-gradient": "^2.7.3",
+    "react-native-paper": "^5.8.0",
     "react-native-push-notification-popup": "^1.6.1",
     "react-native-reanimated": "~2.14.4",
     "react-native-safe-area-context": "4.5.0",
