@@ -35,8 +35,9 @@ const AppRun = ({navigation}) => { //Called when the app starts from the main ap
         }
       }).then(() => {
         checkVaultSkins().then(isLoading(false))})}).then(() => {
-          seeAsyncStorage();
-          getValueFor("Vault",1).then(res => res.split(",")).then(res => {setSkinCount(res.length)})})
+          getValueFor("Vault",1).then(res => res.split(",")).then(res => {setSkinCount(res.length)})
+          .catch((error) => {console.log(error)})
+        })
     },[]);
   
   let results;

@@ -10,7 +10,7 @@ import { FetchWeaponbyUUID } from '../fetchData.js';
 import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 import {Loading} from './LoadingScreen.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const windowHeight = Dimensions.get('window').height;
+import { PageHead } from '../displayComponents.js';
 const SkinsScreen = props => {
   const isFocused = useIsFocused()
 const [weaponName, setWeaponName] = useState("Initial")  //current weapons page state
@@ -22,6 +22,7 @@ useEffect( () => {
     setLoadedSkins([])
     getValueFor("currentState").then(res => {setWeaponName(res)
     hasReloaded(!reload); setSkinsReady(false)})
+
   }
    },[isFocused])
     useEffect( () => {
@@ -45,16 +46,13 @@ useEffect( () => {
         }
         }}).then(setSkinsReady(true))
       }},[reload])
-      
+      let headerText = weaponName.replaceAll('"','') + " Skins";
     if (!skinsReady) { return <Loading/>}
     else {
    
    return (
     <SafeAreaView style = {sty.container}>
-    <View style = {{alignItems: "center"}}>
-    <Text style= {{fontFamily:"RobotMain", color: appColors.RED, fontSize: 33,
-    padding: 15, borderBottomWidth: 5, borderColor: appColors.WHITE}}>{weaponName.replaceAll('"','')} Skins</Text>
-    </View>
+    <PageHead headText = {headerText}/>
     <FlatList
     data={loadedSkins}
     numColumns={3}
@@ -98,22 +96,21 @@ const sty = StyleSheet.create({
     if (owned) {               //add skin conditional
       setTileColor(appColors.GREEN);
       addVaultSkin(props.SkinUuid);
-      vdata().then(res => console.log(res));
 
     }
     else {                     //delete skin conditional
       setTileColor(appColors.RED);
       deleteVaultSkin(props.SkinUuid);
-      vdata().then(res => console.log(res));
+      
     }
   }
 },[owned])
-  
+    vdata().then(res => console.log(res));
     return (
       
       <TouchableOpacity style = {{width: "31.5%",height: 100, padding: 10, elevation: 10,
       marginRight: 10, borderRadius: 15, alignItems: "center",marginBottom: 10, backgroundColor: tileColor}} onPress={() => {setOwned(!owned)}} >
-        <Text style = {{fontFamily: "RobotMain"}}>{props.name}</Text>
+        <Text style = {{fontFamily: "RobotMain", minWidth: "50%"}}>{props.name}</Text>
         <Image
         style={sty.tinyLogo}
         source={{
