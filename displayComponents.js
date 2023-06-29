@@ -5,6 +5,7 @@ import * as React from 'react';
 import { Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer, DrawerActions, useNavigation,useIsFocused } from '@react-navigation/native';
+import { Divider } from 'react-native-paper';
 import appColors from './assets/appColors.js';
 
 const windowWidth = Dimensions.get('window').width;
@@ -52,16 +53,16 @@ export const PageHead = ({  headText }) => {
         ]),
       ).start();
     return (
-    <View id = "page-header" style = {{ width: "100%", height: windowHeight/10, justifyContent: "center"}}>
+    <View id = "page-header" style = {{ width: "100%", height: windowHeight/10, display: "flex"}}>
     <Animated.View style = {scaleStyle}>
     <TouchableOpacity style = {{justifyContent: "center", alignSelf: "center"}} activeOpacity={0.8} onPress={() => navigation.openDrawer()} onPressIn={() =>setMenu(true)}
     onPressOut={() =>setMenu(false)}><Text style= {{fontFamily:"RobotMain", color: appColors.WHITE, fontSize: (windowHeight/22),
     padding: 0, position: "relative", right:6}}> {text}
     </Text></TouchableOpacity>
     </Animated.View>
-    <View id = "border-wrapper" style = {{width: "35%", borderBottomColor: appColors.WHITE, 
-    borderBottomWidth: 5, alignSelf: "center", flex: 1}}>
-      </View>
+    
+    
+      <Divider style = {{width: "100%",height:5, position: "absolute", bottom:0, alignSelf:"center", borderRadius:50, backgroundColor: appColors.WHITE}}/>
     </View>
     )
 }

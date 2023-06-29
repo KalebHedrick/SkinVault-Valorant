@@ -46,7 +46,7 @@ useEffect( () => {
           setLoadedSkins(skins_loading)
           })
         }
-        }}).then(setSkinsReady(true))
+        }}).then(setTimeout(() =>setSkinsReady(true),1000))
       }},[reload])
       let headerText = weaponName.replaceAll('"','') + " Skins";
     if (!skinsReady) { return <Loading/>}
@@ -107,7 +107,7 @@ const sty = StyleSheet.create({
     }
   }
 },[owned])
-    vdata().then(res => console.log(res));
+   // vdata().then(res => console.log(res));
     return (
       
       <TouchableOpacity style = {{width: "31.5%",height: 100, padding: 10, elevation: 10,

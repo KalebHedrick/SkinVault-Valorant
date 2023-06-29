@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View,ScrollView,Button,Dimensions, StatusBar } from 'react-native';
+import { StyleSheet, Text, View,ScrollView,Button,Dimensions, StatusBar,Image } from 'react-native';
 import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -30,6 +30,7 @@ const App = () => {
   StatusBar.setBarStyle(appColors.RED, true);
   // load fonts
     const [isLoaded] = useFonts(customFonts);
+  
   if (!isLoaded) {
     return <AppLoading />;
   }
@@ -40,8 +41,8 @@ const App = () => {
       drawerContent={(props) => <DrawerContent {...props} />}
      screenOptions={{
       drawerStyle: {
-        backgroundColor: appColors.RED,
-        width: Dimensions.get('window').width / 1.5,
+        backgroundColor: appColors.BLACK,
+        width: Dimensions.get('window').width / 2,
       },
       drawerType: "front",
       }
@@ -63,11 +64,11 @@ export const Drawer = createDrawerNavigator();
 const DrawerContent = ({ navigation }) => {
   return (<>
     
-     <View style={{justifyContent: "space-evenly", flex:1, flexDirection:"column", backgroundColor: appColors.BLACK}}>
       
-     <Text style={[sty.DrawerButton,{fontSize: (windowHeight+windowWidth)/33}]}>
-        SkinVault
-      </Text>
+      
+     <View style={{justifyContent: "space-evenly", flex:1, flexDirection:"column"}}>
+     <Image style = {{width:"20%",height:undefined, aspectRatio:1, alignSelf:"center",  resizeMode:"stretch"}} source={require("./assets/croppedIcon.png")} />
+     
       <Divider style = {[sty.Divider, sty.topDivider]}/>
       <TouchableOpacity style = {sty.iconMerge} onPress={() => navigation.navigate("Home")}>
       <Ionicons name="home-outline" size={(windowHeight+windowWidth)/47} color= {appColors.WHITE} /><Text style={sty.DrawerButton}> HOME</Text>
@@ -78,7 +79,7 @@ const DrawerContent = ({ navigation }) => {
 
       <Divider   style = {[sty.Divider,sty.bottomDivider]}/>
 
-      <TouchableOpacity onPress={() => navigation.navigate("Settings")}><Text style={[sty.DrawerButton,{fontSize: (windowHeight+windowWidth)/68}]}>Settings</Text></TouchableOpacity>
+      <TouchableOpacity onPress={clearAsyncStorage}><Text style={[sty.DrawerButton,{fontSize: (windowHeight+windowWidth)/68}]}>clearStorage</Text></TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("About")}><Text style={[sty.DrawerButton,{fontSize: (windowHeight+windowWidth)/68}]}>About</Text></TouchableOpacity>
       </View>
   
