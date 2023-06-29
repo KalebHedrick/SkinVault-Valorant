@@ -7,8 +7,6 @@ import HomeScreen from './screens/HomeScreen.js';
 import { useNavigation } from '@react-navigation/native';
 const AppRun = ({navigation}) => { //Called when the app starts from the main app file. Executes chain of functions to initialize and fetch api.
   const [Loading, isLoading] = useState(true); //state for loading the app
-  const [skinsTotal, updateTotal] = useState(0);
-  const [skinCount, setSkinCount] = useState(0)
   useEffect( () => {
     apiDataArray().then(() => {
    getValueFor('allData').then((res) =>{ //store all data in local storage
@@ -30,20 +28,17 @@ const AppRun = ({navigation}) => { //Called when the app starts from the main ap
           })
         }
       }).then(() => {
-        checkVaultSkins().then(isLoading(false))})}).then(() => {
-          getValueFor("Vault",1).then(res => res.split(",")).then(res => {setSkinCount(res.length)})
-          .catch((error) => {console.log(error)})
-        })
+        checkVaultSkins().then(isLoading(false))})})
+        
     },[]);
   
   let results;
-  const nav = useNavigation();
-  nav.openDrawer();
+  
   if (Loading) {
     results = <Text style = {{padding: 50, flex: 1}}>Loading</Text>
   }
   else {
-    results = <HomeScreen totalSkins = {skinsTotal} skinCount = {skinCount}/>
+    results = <HomeScreen/>
   }
   return results;
 }
