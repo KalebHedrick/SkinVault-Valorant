@@ -42,7 +42,7 @@ const App = () => {
      screenOptions={{
       drawerStyle: {
         backgroundColor: appColors.BLACK,
-        width: Dimensions.get('window').width / 2,
+        width: Dimensions.get('window').width / 1.8,
       },
       drawerType: "front",
       }
