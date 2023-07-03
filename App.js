@@ -12,6 +12,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { createContext } from 'react';
 import { Divider } from 'react-native-paper';
 import Ionicons from '@expo/vector-icons/Ionicons'
+
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 // Screen components
@@ -20,10 +21,13 @@ import WeaponScreen from './screens/WeaponScreen';
 import AppRun from './initializeApp';
 import SkinsScreen from './screens/SkinsScreen';
 import AboutScreen from './screens/AboutScreen';
+import  LoadingScreen from './screens/LoadingScreen';
+import VaultScreen from './screens/VaultScreen';
+import SettingsScreen from './screens/SettingsScreen';
 //FONTS
 let customFonts = {
   'RobotMain': require('./assets/fonts/RobotoMono-VariableFont_wght.ttf'),
-  'RobotMain_BOLD': require('./assets/fonts/RobotoMono-LightItalic.ttf'),
+  'RobotMain_BOLD': require('./assets/fonts/RobotoMono-Bold.ttf'),
 };
 
 const App = () => {
@@ -32,7 +36,7 @@ const App = () => {
     const [isLoaded] = useFonts(customFonts);
   
   if (!isLoaded) {
-    return <AppLoading />;
+    return <LoadingScreen/>;
   }
   return (
     <NavigationContainer>
@@ -53,6 +57,9 @@ const App = () => {
     <Drawer.Screen name = "Weapons" component = {WeaponScreen} options = {{headerShown: false}}/>
     <Drawer.Screen name = "Skins" component = {SkinsScreen} options = {{headerShown: false}}/>
     <Drawer.Screen name = "About" component = {AboutScreen} options = {{headerShown: false}}/>
+    <Drawer.Screen name = "Vault" component = {VaultScreen} options = {{headerShown: false}}/>
+    <Drawer.Screen name = "Settings" component = {SettingsScreen} options = {{headerShown: false}}/>
+    <Drawer.Screen name = "Generator" component = {SettingsScreen} options = {{headerShown: false}}/>
     </Drawer.Navigator>
     
     </NavigationContainer>
@@ -63,23 +70,24 @@ export default App;
 export const Drawer = createDrawerNavigator();
 const DrawerContent = ({ navigation }) => {
   return (<>
-    
-      
-      
-     <View style={{justifyContent: "space-evenly", flex:1, flexDirection:"column"}}>
-     <Image style = {{width:"20%",height:undefined, aspectRatio:1, alignSelf:"center",  resizeMode:"stretch"}} source={require("./assets/croppedIcon.png")} />
+     <View style={{justifyContent: "space-evenly", flex:1, flexDirection:"column",  }}>
+     <View style = {{height:"10%", width:"100%", paddingBottom: windowHeight/30}}>
+     <Image style = {{width:undefined,height:"100%", aspectRatio:1, resizeMode:"contain", alignSelf:"center"}} source={require("./assets/croppedIcon.png")} />
      
+     <Text style={[sty.DrawerButton,{fontSize:(windowHeight+windowWidth)/40}]}>SkinVault</Text>
+     </View>
       <Divider style = {[sty.Divider, sty.topDivider]}/>
       <TouchableOpacity style = {sty.iconMerge} onPress={() => navigation.navigate("Home")}>
       <Ionicons name="home-outline" size={(windowHeight+windowWidth)/47} color= {appColors.WHITE} /><Text style={sty.DrawerButton}> HOME</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("Weapons")}><Text style={sty.DrawerButton}>ALL SKINS</Text></TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("Bundles")}><Text style={sty.DrawerButton}>ALL BUNDLES</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Bundles")}><Text style={sty.DrawerButton}>ALL CARDS</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Bundles")}><Text style={sty.DrawerButton}>ALL BUDDIES</Text></TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("Vault")}><Text style={sty.DrawerButton}>VAULT</Text></TouchableOpacity>
-
+      <TouchableOpacity onPress={() => navigation.navigate("Generator")}><Text style={sty.DrawerButton}>GENERATOR</Text></TouchableOpacity>
       <Divider   style = {[sty.Divider,sty.bottomDivider]}/>
 
-      <TouchableOpacity onPress={clearAsyncStorage}><Text style={[sty.DrawerButton,{fontSize: (windowHeight+windowWidth)/68}]}>clearStorage</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Settings")}><Text style={[sty.DrawerButton,{fontSize: (windowHeight+windowWidth)/68}]}>Settings</Text></TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("About")}><Text style={[sty.DrawerButton,{fontSize: (windowHeight+windowWidth)/68}]}>About</Text></TouchableOpacity>
       </View>
   
@@ -104,6 +112,3 @@ seeAsyncStorage = async() => {
    * debug tool to easiy clear data in local storage
    */
   });}
-  clearAsyncStorage = async() => {
-      AsyncStorage.clear();
-  }
