@@ -24,6 +24,8 @@ import AboutScreen from './screens/AboutScreen';
 import  LoadingScreen from './screens/LoadingScreen';
 import VaultScreen from './screens/VaultScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import GeneratorScreen from './screens/GeneratorScreen';
+import CardsScreen from './screens/CardsScreen';
 //FONTS
 let customFonts = {
   'RobotMain': require('./assets/fonts/RobotoMono-VariableFont_wght.ttf'),
@@ -59,7 +61,8 @@ const App = () => {
     <Drawer.Screen name = "About" component = {AboutScreen} options = {{headerShown: false}}/>
     <Drawer.Screen name = "Vault" component = {VaultScreen} options = {{headerShown: false}}/>
     <Drawer.Screen name = "Settings" component = {SettingsScreen} options = {{headerShown: false}}/>
-    <Drawer.Screen name = "Generator" component = {SettingsScreen} options = {{headerShown: false}}/>
+    <Drawer.Screen name = "Generator" component = {GeneratorScreen} options = {{headerShown: false}}/>
+    <Drawer.Screen name = "Cards" component = {CardsScreen} options = {{headerShown: false}}/>
     </Drawer.Navigator>
     
     </NavigationContainer>
@@ -81,7 +84,7 @@ const DrawerContent = ({ navigation }) => {
       <Ionicons name="home-outline" size={(windowHeight+windowWidth)/47} color= {appColors.WHITE} /><Text style={sty.DrawerButton}> HOME</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("Weapons")}><Text style={sty.DrawerButton}>ALL SKINS</Text></TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("Bundles")}><Text style={sty.DrawerButton}>ALL CARDS</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Cards")}><Text style={sty.DrawerButton}>ALL CARDS</Text></TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("Bundles")}><Text style={sty.DrawerButton}>ALL BUDDIES</Text></TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("Vault")}><Text style={sty.DrawerButton}>VAULT</Text></TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("Generator")}><Text style={sty.DrawerButton}>GENERATOR</Text></TouchableOpacity>

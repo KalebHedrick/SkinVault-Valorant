@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontFamily: "RobotMain_BOLD",
     color: appColors.WHITE,
-    fontSize: (windowHeight + windowWidth) / 30,
+    fontSize: (windowHeight + windowWidth) / 40,
     position: "relative",
     right: 6,
   },

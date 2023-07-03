@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,ScrollView,Button, Image, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View,ScrollView,Button, Image, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { useState, useEffect, useContext, useRef } from 'react';
 import {addVaultSkin, checkVaultSkin, deleteVaultSkin, getValueFor, getVaultSize} from '../fetchData.js';
 import React from "react";
@@ -21,13 +21,17 @@ return (
         <View style= {sty.buttonContainer}>
        <TouchableOpacity onPress = {clearAsyncStorage} style = {sty.button}><Text style = {sty.optionText}>Clear Vault</Text></TouchableOpacity> 
        <TouchableOpacity onPress={{}} style = {sty.button}><Text style = {sty.optionText}>Change Progress Wheel Color</Text></TouchableOpacity> 
-       <TouchableOpacity style = {sty.button}><Text style = {sty.optionText}>Purchase Premium</Text></TouchableOpacity> 
+       <TouchableOpacity style = {sty.button}><Text style = {sty.optionText}>Donate</Text></TouchableOpacity> 
        </View>
     </SafeAreaView>
 )
 }
 clearAsyncStorage = async() => {
     AsyncStorage.clear();
+    function infiniteAlert() {
+        Alert.alert('Storage Cleared', 'Restart App');
+    }
+    infiniteAlert();
 }
 const sty = StyleSheet.create({
     container: {

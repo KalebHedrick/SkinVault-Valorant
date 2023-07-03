@@ -28,7 +28,29 @@ export const FetchAllWeaponsData = async () => { //Return a promise with all wea
         FetchAllWeaponsData();
       }
 };
-
+export const FetchAllCardData = async () => { //Return a promise with all player cards
+  try {
+      const response = await fetch(
+        'https://valorant-api.com/v1/playercards',{
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          },
+          method: 'GET',
+      }
+      );
+      if (response.status == 200) { 
+        return await response.json();
+      }
+      else {
+        console.error("Fetch error occured, retrying");
+      FetchAllCardData();
+      }
+    } catch (error) {
+      console.error("Fetch error occured, retrying");
+      FetchAllCardData();
+    }
+};
 export const FetchWeaponbyUUID = async (WUUID) => { //Return a promise with all weapon data
   const url = "https://valorant-api.com/v1/weapons/".concat(WUUID.replaceAll('"',''))
     try {

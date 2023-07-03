@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PageHead } from '../displayComponents.js';
 
 const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get('window').width;
 
 const VaultScreen = ({ navigation }) => {
   const isFocused = useIsFocused();
@@ -40,7 +41,7 @@ const VaultScreen = ({ navigation }) => {
             let skins_loading = [];
       for (const element of res) { //for each weapon of allData
         
-          let skins = await getSkinsArr(element.displayName) //gets all skins for given weapon
+          let skins = await getOwnedSkinsArr(element.displayName) //gets all skins for given weapon
           
             skins_loading = await skins_loading.concat(skins); //concat the skins to the total owned skin list
             setLoadedSkins(skins_loading) //set new loaded Skins
@@ -53,7 +54,6 @@ const VaultScreen = ({ navigation }) => {
   if (!skinsReady) {
     return <LoadingScreen />;
   } else {
-    console.log("final" + loadedSkins);
     return (
       <SafeAreaView style={styles.container}>
         <PageHead headText="Vault Skins" />
@@ -74,18 +74,16 @@ export default VaultScreen;
 
 
 const Tile = props => {
-  const navigation = useNavigation();
-
   return (
     <TouchableOpacity
       style={styles.square}>
-      <Text style={{ fontFamily: "RobotMain", color: appColors.WHITE }}>{props.name}</Text>
+      <Text style={{ fontFamily: "RobotMain", color: appColors.WHITE, minWidth:"50%", fontSize: (windowHeight + windowWidth) / 120, }}>{props.name}</Text>
       <Image style={styles.tinyLogo} source={{ uri: props.icon }} />
     </TouchableOpacity>
   );
 };
 
-const getSkinsArr = async(name) => { //returns array of all skins
+export const getOwnedSkinsArr = async(name) => { //returns array of all skins from given weapon
         let skins_loading = [];
         let uuid = await getValueFor(name); //get weapon uuid
         let weaponData = await FetchWeaponbyUUID(uuid); //fetch weapon JSON

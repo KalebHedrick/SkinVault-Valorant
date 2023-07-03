@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   square: {
-    width: "31.5%",
+    maxWidth: "31.5%",
     height: 100,
     elevation: 10,
     borderRadius: 15,
