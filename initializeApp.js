@@ -4,7 +4,8 @@ import { FetchAllWeaponsData, FetchWeaponbyUUID, save, getValueFor, FetchWeaponS
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import WeaponScreen from './screens/WeaponScreen.js';
 import HomeScreen from './screens/HomeScreen.js';
-import { useNavigation } from '@react-navigation/native';
+import LoadingScreen from './screens/LoadingScreen.js';
+
 const AppRun = ({navigation}) => { //Called when the app starts from the main app file. Executes chain of functions to initialize and fetch api.
   const [Loading, isLoading] = useState(true); //state for loading the app
   useEffect( () => {
@@ -13,19 +14,8 @@ const AppRun = ({navigation}) => { //Called when the app starts from the main ap
     
         res = JSON.parse(res);
         res = res.data;
-        let total = 0;
         for (const element of res) {
-          save(element.displayName, element.uuid); //save data for each weapon
-
-          FetchWeaponbyUUID(element.uuid)          //get total number of skins
-          .then(arr => { 
-            arr = arr.data.skins;
-            for (const element of arr) {
-              total++;
-              
-            }
-            updateTotal(total);
-          })
+          save(element.displayName, element.uuid); //save data fosr each weapon
         }
       }).then(() => {
         checkVaultSkins().then(isLoading(false))})})
@@ -35,8 +25,8 @@ const AppRun = ({navigation}) => { //Called when the app starts from the main ap
   let results;
   
   if (Loading) {
-    results = <Text style = {{padding: 50, flex: 1}}>Loading</Text>
-  }
+    results =  <LoadingScreen/>
+    }
   else {
     results = <HomeScreen/>
   }

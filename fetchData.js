@@ -16,7 +16,7 @@ export const FetchAllWeaponsData = async () => { //Return a promise with all wea
         );
         if (response.status == 200) { 
           
-          console.log("ALL WEAPON DATA FROM API RETRIEVED");
+        //  console.log("ALL WEAPON DATA FROM API RETRIEVED");
           return await response.json();
         }
         else {
@@ -44,7 +44,7 @@ export const FetchWeaponbyUUID = async (WUUID) => { //Return a promise with all 
         );
         if (response.status == 200) { 
           
-          console.log("Weapon with UUID" + WUUID + "Retreived")
+          //console.log("Weapon with UUID" + WUUID + "Retreived")
           return await response.json();
         }
         else {
@@ -70,7 +70,7 @@ export const FetchWeaponSkinbyUUID = async (WUUID) => { //Return a promise with 
       );
       if (response.status == 200) { 
         
-        console.log("Weapon with UUID" + WUUID + "Retreived")
+       // console.log("Weapon with UUID" + WUUID + "Retreived")
         return await response.json();
       }
       else {
@@ -98,7 +98,7 @@ export async function saveString(key, value) {
 export async function getValueFor(key, retries) { //returns data from storage
   let result = await AsyncStorage.getItem(key);
   if (typeof result === 'string' || result instanceof String) {
-    console.log("data with key: " + key + " retrieved from local storage");
+   // console.log("data with key: " + key + " retrieved from local storage");
     return await result;
   }
   else {

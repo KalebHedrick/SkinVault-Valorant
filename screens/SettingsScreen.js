@@ -8,9 +8,58 @@ import appColors from '../assets/appColors.js';
 import JsonQuery from 'json-query';
 import { FetchWeaponbyUUID } from '../fetchData.js';
 import { NavigationContainer, useIsFocused } from '@react-navigation/native';
-import {Loading} from './LoadingScreen.js';
+import LoadingScreen from './LoadingScreen.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { PageHead } from '../displayComponents.js';
+const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get('window').width;
 const SettingsScreen = ({}) => {
-
+return (
+    <SafeAreaView style = {sty.container}>
+    
+        <PageHead headText="Settings"/>
+        <View style= {sty.buttonContainer}>
+       <TouchableOpacity onPress = {clearAsyncStorage} style = {sty.button}><Text style = {sty.optionText}>Clear Vault</Text></TouchableOpacity> 
+       <TouchableOpacity onPress={{}} style = {sty.button}><Text style = {sty.optionText}>Change Progress Wheel Color</Text></TouchableOpacity> 
+       <TouchableOpacity style = {sty.button}><Text style = {sty.optionText}>Purchase Premium</Text></TouchableOpacity> 
+       </View>
+    </SafeAreaView>
+)
 }
+clearAsyncStorage = async() => {
+    AsyncStorage.clear();
+}
+const sty = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: appColors.BLACK,
+
+    },
+    optionText: {
+        fontFamily: "RobotMain",
+        fontSize: (windowHeight + windowWidth) / 70,
+        color: appColors.WHITE,
+        textAlign: "center",
+        opacity:1,
+       
+        
+    },
+    button: {
+        width: (windowHeight + windowWidth) / 7,
+        height: (windowHeight + windowWidth) / 12,
+        borderColor: appColors.RED,
+        borderWidth: 5,
+        alignItems:"center",
+        justifyContent:"center"
+        
+    },
+    buttonContainer: {
+        flexDirection:"column",
+        justifyContent: "space-evenly",
+        alignItems:"flex-start",
+        
+        flex: 1,
+        marginHorizontal: windowWidth/20
+    }
+})
+export default SettingsScreen;
