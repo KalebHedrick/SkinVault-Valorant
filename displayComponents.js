@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ScrollView, Button, Image, FlatList, TouchableOpacity, Animated, Easing } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import * as React from 'react';
 import { Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -69,6 +69,7 @@ export const PageHead = ({ headText }) => {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
