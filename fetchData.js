@@ -51,6 +51,29 @@ export const FetchAllCardData = async () => { //Return a promise with all player
       FetchAllCardData();
     }
 };
+export const FetchAllBuddyData = async () => { //Return a promise with all gun buddies
+  try {
+      const response = await fetch(
+        'https://valorant-api.com/v1/buddies',{
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          },
+          method: 'GET',
+      }
+      );
+      if (response.status == 200) { 
+        return await response.json();
+      }
+      else {
+        console.error("Fetch error occured, retrying");
+      FetchAllBuddyData();
+      }
+    } catch (error) {
+      console.error("Fetch error occured, retrying");
+      FetchAllBuddyData();
+    }
+};
 export const FetchWeaponbyUUID = async (WUUID) => { //Return a promise with all weapon data
   const url = "https://valorant-api.com/v1/weapons/".concat(WUUID.replaceAll('"',''))
     try {
@@ -137,7 +160,10 @@ export async function getValueFor(key, retries) { //returns data from storage
   }
 }
 /*********************************************************** */
-export async function checkVaultSkins() { //initiates creation of vault if it does not already exist
+//                  FUNCTIONS FOR Vault STORAGE
+//
+/*********************************************************** */
+export async function checkVaultSkins() { //initiates creation of Vault if it does not already exist
   checkVault = () => {
 getValueFor("Vault",2).then(res => {
   if (!res || typeof(res) == undefined) {
@@ -179,7 +205,7 @@ export async function deleteVaultSkin(skinUUID) {
   }
   return await deleteSkin(skinUUID);
 }
-export async function checkVaultSkin(skinUUID) { //returns true if 'skinUUID' exists in vault, false otherwise
+export async function checkVaultSkin(skinUUID) { //returns true if 'skinUUID' exists in Vault, false otherwise
    checkSkin =async () => {
       let dataArray = await getValueFor("Vault",1)
       dataArray = dataArray.split(",")
@@ -192,4 +218,61 @@ export async function checkVaultSkin(skinUUID) { //returns true if 'skinUUID' ex
     }
      return await checkSkin();
   }
-  
+  /************************************************ */
+// FUNCTIONS FOR CARD STORAGE
+/************************************************** */
+export async function checkCardSkins() { //initiates creation of Card if it does not already exist
+  checkCard = () => {
+getValueFor("Card",2).then(res => {
+  if (!res || typeof(res) == undefined) {
+    saveString("Card","noData");
+  }
+}).then(() => {return true})
+}
+return await checkCard();
+}
+export async function addCardSkin(cardUUID) {
+  addCard= () => {
+  getValueFor("Card",3).then(res => {
+    let newCard
+    if (res == "noData") {
+       newCard = cardUUID;
+    }
+    else {
+   newCard = res.concat("," + cardUUID);
+    }
+    saveString("Card",newCard);
+  })
+}
+return await addCard(cardUUID);
+}
+export async function deleteCardSkin(cardUUID) {
+  deleteCard = () => {
+    getValueFor("Card",3).then(res => {
+    let dataArray = res.split(",");
+    dataArray = dataArray.filter(e => e !== cardUUID);
+    let newData;
+    if (dataArray.length == 0) {
+      newData = "noData";
+    }
+    else {
+    newData = dataArray.join(",");
+    }
+     saveString("Card",newData);
+    })
+  }
+  return await deleteCard(cardUUID);
+}
+export async function checkCardSkin(cardUUID) { //returns true if 'skinUUID' exists in Card, false otherwise
+   checkCard =async () => {
+      let dataArray = await getValueFor("Card",1)
+      dataArray = dataArray.split(",")
+      for(const element of dataArray) {
+        if(element == cardUUID) {
+          return true;
+        }
+      }
+      return false;
+    }
+     return await checkCard();
+  }

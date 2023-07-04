@@ -27,11 +27,25 @@ return (
 )
 }
 clearAsyncStorage = async() => {
-    AsyncStorage.clear();
-    function infiniteAlert() {
-        Alert.alert('Storage Cleared', 'Restart App');
+    Alert.alert('Delete Vault', 'Are you sure you want to clear your vault? This action cannot be undone.', [
+        {
+          text: 'Yes',
+          onPress: () => clearVault(),
+          style: 'cancel',
+        },
+        {text: 'No'},
+      ]);
+    
+    function clearVault() {
+        AsyncStorage.clear();
+        
+        infiniteAlert = () => {
+            Alert.alert('Storage Cleared', 'MUST RESTART APP TO CONTINUE',[ {text: 'OK', onPress: () => infiniteAlert()}]);
+        }
+        infiniteAlert();
+       
     }
-    infiniteAlert();
+    
 }
 const sty = StyleSheet.create({
     container: {

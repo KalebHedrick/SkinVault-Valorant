@@ -1,8 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { useState, useEffect, useRef } from 'react';
-import { FetchAllWeaponsData, FetchWeaponbyUUID, save, getValueFor, FetchWeaponSkinbyUUID, checkVaultSkins } from './fetchData.js';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import WeaponScreen from './screens/WeaponScreen.js';
+import { FetchAllWeaponsData, FetchWeaponbyUUID, save, getValueFor, FetchWeaponSkinbyUUID, checkVaultSkins, checkCardSkins } from './fetchData.js';
 import HomeScreen from './screens/HomeScreen.js';
 import LoadingScreen from './screens/LoadingScreen.js';
 
@@ -15,10 +13,10 @@ const AppRun = ({navigation}) => { //Called when the app starts from the main ap
         res = JSON.parse(res);
         res = res.data;
         for (const element of res) {
-          save(element.displayName, element.uuid); //save data fosr each weapon
+          save(element.displayName, element.uuid); //save data for each weapon
         }
       }).then(() => {
-        checkVaultSkins().then(isLoading(false))})})
+        checkVaultSkins().then(() => checkCardSkins()).then(isLoading(false))})})
         
     },[]);
   

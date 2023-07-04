@@ -1,88 +1,71 @@
-import { StyleSheet, Text, View, ScrollView, Button, Image, FlatList, TouchableOpacity, Alert, Modal } from 'react-native';
-import { useState, useEffect, useRef, useContext } from 'react';
-import { getValueFor, save, FetchAllCardData } from '../fetchData'
-import React from "react";
+import { StyleSheet, Text, View, ScrollView, Button, Image, FlatList, TouchableOpacity } from 'react-native';
+import { useState, useEffect, useContext, useRef, useMemo } from 'react';
+import { FetchAllCardData, addCardSkin, checkCardSkin, deleteCardSkin, getValueFor } from '../fetchData.js';
+import React, {memo} from "react";
 import { Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer'
 import appColors from '../assets/appColors.js';
-import SkinsScreen from './SkinsScreen.js';
-import { PageHead } from '../displayComponents.js';
-import { LinearGradient } from 'expo-linear-gradient';
+import JsonQuery from 'json-query';
+import { FetchWeaponbyUUID } from '../fetchData.js';
+import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 import LoadingScreen from './LoadingScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { PageHead } from '../displayComponents.js';
 
-const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get('window').width;
 
-const CardsScreen = ({ navigation }) => {
-  const [card, setCard] = useState([]);
-  const [displayCard, setDisplayCard] = useState(false);
-  const [visibleCard, setVisibleCard] = useState("");
-  const [reload, setReload] = useState(true);
-  const [firstReload, isFirstReload] = useState(true);
+const CardsScreen = props => {
+  const isFocused = useIsFocused();
+  const [loadedCards, setLoadedCards] = useState([]);
+  const [reload, hasReloaded] = useState(true);
+  const [cardsReady, setCardsReady] = useState(false);
+
   useEffect(() => {
-    FetchAllCardData().then(res => {
-      res = res.data;
-      const tempcard = [];
+    if (isFocused) {
+      setLoadedCards([]);
+        hasReloaded(!reload);
+        setCardsReady(false);
+      
+    }
+  }, [isFocused]);
 
-      for (const element of res) {
-        tempcard.push({ name: element.displayName, icon: element.displayIcon, largeIcon: element.largeArt });
-      }
-
-      setCard(tempcard);
-    });
-  }, []);
   useEffect(() => {
-    if (!firstReload) {
-    setDisplayCard(false)
-    }
-    else {
-        isFirstReload(false);
-    }
-}, [reload]);
+    let cards_loading = [];
+      FetchAllCardData().then(res => {
+        res = res.data;
 
-  if (card.length === 0) {
+        for (const element of res) {
+            checkCardSkin(element.uuid).then(checkOwned => {
+              cards_loading.push({ name: element.displayName, icon: element.displayIcon, CardUuid: element.uuid, isOwned: checkOwned });
+              setLoadedCards(cards_loading);
+            });
+        }
+      }).then(setTimeout(() => setCardsReady(true), 1000));
+      }, [reload]);
+      const renderItem = ({ item }) => <Tile name={item.name} icon={item.icon} CardUuid={item.CardUuid} isOwned={item.isOwned} />
+  if (!cardsReady) {
     return <LoadingScreen />;
-  } else {
-    if (!displayCard) {
-        result = <FlatList
-        data={card}
-        numColumns={3}
-        contentContainerStyle={styles.flatListContent}
-        ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-        renderItem={({ item }) => (
-          <Tile name={item.name} icon={item.icon} largeIcon={item.largeIcon} navigation={navigation} onPress={() => {setVisibleCard(item.largeIcon);setDisplayCard(true)}} />
-        )}
-      />
-    }
-    else {
-        result = <><TouchableOpacity style = {styles.BackButton} onPress={() => setReload(!reload)}>
-        <Text style = {styles.optionText}>Go Back</Text>
-        </TouchableOpacity>
-        <Image style={styles.tinyLogo} source={{ uri: visibleCard }} /></>
-    }
+  }
+   else {
     return (
       <SafeAreaView style={styles.container}>
-        <PageHead headText="All Cards" />
-        {result}
+        <PageHead headText={"All Cards"} />
+        <FlatList
+          data={loadedCards}
+          numColumns={3}
+          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+          contentContainerStyle={styles.flatListContent}
+          renderItem={renderItem}
+          windowSize={2}
+          
+        />
       </SafeAreaView>
     );
   }
 };
 
 export default CardsScreen;
-
-const Tile = props => {
-  const navigation = useNavigation();
-
-  return (
-    <TouchableOpacity style={styles.square} onPress={props.onPress}>
-      <Text style={{ fontFamily: "RobotMain", color: appColors.WHITE, minWidth: "50%", fontSize: (windowHeight + windowWidth) / 120 }}>{props.name}</Text>
-      <Image style={styles.tinyLogo} source={{ uri: props.icon }} />
-    </TouchableOpacity>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {
@@ -94,18 +77,22 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 20,
   },
-  square: {
-    maxWidth: "31.5%",
+  tile: {
+    width: "31.5%",
     height: 100,
+    padding: 10,
     elevation: 10,
+    marginRight: 10,
     borderRadius: 15,
     alignItems: "center",
-    padding: 10,
-    marginRight: 10,
-    marginBottom: 2,
-    display: "flex",
-    flex: 1,
-    backgroundColor: appColors.RED,
+    marginBottom: 10,
+  },
+  tileText: {
+    fontFamily: "RobotMain",
+    color: appColors.WHITE,
+    fontSize: (windowHeight + windowWidth) / 120,
+    minWidth: "50%",
+    textAlign: "center",
   },
   tinyLogo: {
     resizeMode: "contain",
@@ -113,20 +100,38 @@ const styles = StyleSheet.create({
     width: "100%",
     flex: 1,
   },
-  BackButton: {
-    width: (windowHeight + windowWidth) / 7,
-    height: (windowHeight + windowWidth) / 12,
-    borderWidth: 5,
-    alignItems:"center",
-    justifyContent:"center",
-    alignSelf: "center",
-    borderColor: appColors.RED
-},
-optionText: {
-    fontFamily: "RobotMain",
-    fontSize: (windowHeight + windowWidth) / 70,
-    color: appColors.WHITE,
-    textAlign: "center",
-    opacity:1,
-},
 });
+
+const Tile = props => {
+  const [owned, setOwned] = useState(props.isOwned);
+  const firstLoad = useRef(true);
+  const [tileColor, setTileColor] = useState(owned ? appColors.GREEN : appColors.RED);
+
+  useEffect(() => {
+    if (firstLoad.current) {
+      firstLoad.current = false;
+    } else {
+      if (owned) {
+        setTileColor(appColors.GREEN);
+        addCardSkin(props.CardUuid);
+      } else {
+        setTileColor(appColors.RED);
+        deleteCardSkin(props.CardUuid);
+      }
+    }
+  }, [owned]);
+
+  return (
+    <TouchableOpacity
+      style={[styles.tile, { backgroundColor: tileColor }]}
+      onPress={() => setOwned(!owned)}
+    >
+      <Text style={styles.tileText}>{props.name}</Text>
+      <Image style={styles.tinyLogo} source={{ uri: props.icon }} />
+    </TouchableOpacity>
+  );
+};
+
+async function vdata() {
+  return await getValueFor("Vault");
+}
