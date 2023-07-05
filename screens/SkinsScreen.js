@@ -30,18 +30,40 @@ const SkinsScreen = props => {
       setLoadedSkins([]);
       getValueFor("currentState").then(res => {
         setWeaponName(res);
+        setCurrentPage(1);
+        setOffset(0);
+        setTotalPages(1);
         hasReloaded(!reload);
         setSkinsReady(false);
       });
     }
-  }, [isFocused, offset]);
+  }, [isFocused]);
+  useEffect(() => {
+      setLoadedSkins([]);
+      getValueFor("currentState").then(res => {
+        setWeaponName(res);
+        hasReloaded(!reload);
+        setSkinsReady(false);
+      });
+  }, [offset]);
 
   useEffect(() => {
     let skins_loading = [];
     if (weaponName !== "Initial") {
       getValueFor(weaponName.replaceAll('"', '')).then(res => FetchWeaponbyUUID(res)).then(res => {
         res = res.data.skins;
-        setTotalPages(Math.ceil(res.length/listSize.current));
+        let counter = 0;
+        for (const element of res) {
+          console.log(typeof(element.contentTierUuid))
+          if (element.contentTierUuid == null) {
+            
+          }
+          else {
+            counter++;
+          }
+        }
+        setTotalPages(Math.ceil(counter/listSize.current));
+        
         for(let i = offset; i < offset+(listSize.current); i++) {
           if (i < res.length) {
             let element = res[i];
