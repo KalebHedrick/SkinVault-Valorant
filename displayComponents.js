@@ -33,19 +33,19 @@ export const PageHead = ({ headText }) => {
     outputRange: [1, 1.03],
   });
   let scaleStyle = { transform: [{ scale: textScale }] };
-  const duration = 1000;
+  const duration = 1600;
   Animated.loop(
     Animated.sequence([
       Animated.timing(scaleValue, {
-        toValue: 1.03,
+        toValue: 1.07,
         duration: duration,
-        easing: Easing.bounce,
+        easing: Easing.linear,
         useNativeDriver: true,
       }),
       Animated.timing(scaleValue, {
         toValue: 1,
         duration: duration,
-        easing: Easing.bounce,
+        easing: Easing.linear,
         useNativeDriver: true,
       }),
     ])

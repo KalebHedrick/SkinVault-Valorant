@@ -26,7 +26,8 @@ import VaultScreen from './screens/VaultScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import GeneratorScreen from './screens/GeneratorScreen';
 import CardsScreen from './screens/CardsScreen';
-import BuddiesScreen from './screens/BuddiesScreen';
+import BuddysScreen from './screens/BuddysScreen';
+import MainVaultScreen from './screens/MainVaultScreen'
 //FONTS
 let customFonts = {
   'RobotMain': require('./assets/fonts/RobotoMono-VariableFont_wght.ttf'),
@@ -60,11 +61,12 @@ const App = () => {
     <Drawer.Screen name = "Weapons" component = {WeaponScreen} options = {{headerShown: false}}/>
     <Drawer.Screen name = "Skins" component = {SkinsScreen} options = {{headerShown: false}}/>
     <Drawer.Screen name = "About" component = {AboutScreen} options = {{headerShown: false}}/>
-    <Drawer.Screen name = "Vault" component = {VaultScreen} options = {{headerShown: false}}/>
+    <Drawer.Screen name = "Vault" component = {MainVaultScreen} options = {{headerShown: false}}/>
+    <Drawer.Screen name = "SkinVault" component = {VaultScreen} options = {{headerShown: false}}/>
     <Drawer.Screen name = "Settings" component = {SettingsScreen} options = {{headerShown: false}}/>
     <Drawer.Screen name = "Generator" component = {GeneratorScreen} options = {{headerShown: false}}/>
     <Drawer.Screen name = "Cards" component = {CardsScreen} options = {{headerShown: false}}/>
-    <Drawer.Screen name = "Buddies" component = {BuddiesScreen} options = {{headerShown: false}}/>
+    <Drawer.Screen name = "Buddys" component = {BuddysScreen} options = {{headerShown: false}}/>
     </Drawer.Navigator>
     
     </NavigationContainer>
@@ -87,7 +89,7 @@ const DrawerContent = ({ navigation }) => {
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("Weapons")}><Text style={sty.DrawerButton}>ALL SKINS</Text></TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("Cards")}><Text style={sty.DrawerButton}>ALL CARDS</Text></TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("Buddies")}><Text style={sty.DrawerButton}>ALL BUDDIES</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Buddys")}><Text style={sty.DrawerButton}>ALL BUDDIES</Text></TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("Vault")}><Text style={sty.DrawerButton}>VAULT</Text></TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("Generator")}><Text style={sty.DrawerButton}>GENERATOR</Text></TouchableOpacity>
       <Divider   style = {[sty.Divider,sty.bottomDivider]}/>

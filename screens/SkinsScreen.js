@@ -11,7 +11,7 @@ import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 import LoadingScreen from './LoadingScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PageHead } from '../displayComponents.js';
-
+import Ionicons from '@expo/vector-icons/Ionicons'
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
@@ -21,7 +21,10 @@ const SkinsScreen = props => {
   const [loadedSkins, setLoadedSkins] = useState([]);
   const [reload, hasReloaded] = useState(true);
   const [skinsReady, setSkinsReady] = useState(false);
-
+  const [offset, setOffset] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentpage, setCurrentPage] = useState(1);
+  const listSize = useRef(12)
   useEffect(() => {
     if (isFocused) {
       setLoadedSkins([]);
@@ -31,15 +34,17 @@ const SkinsScreen = props => {
         setSkinsReady(false);
       });
     }
-  }, [isFocused]);
+  }, [isFocused, offset]);
 
   useEffect(() => {
     let skins_loading = [];
     if (weaponName !== "Initial") {
       getValueFor(weaponName.replaceAll('"', '')).then(res => FetchWeaponbyUUID(res)).then(res => {
         res = res.data.skins;
-
-        for (const element of res) {
+        setTotalPages(Math.ceil(res.length/listSize.current));
+        for(let i = offset; i < offset+(listSize.current); i++) {
+          if (i < res.length) {
+            let element = res[i];
           let skinName = element.displayName;
           let iconPNG = element.displayIcon;
           if (iconPNG === null) {
@@ -52,28 +57,52 @@ const SkinsScreen = props => {
             });
           }
         }
+      }
       }).then(setTimeout(() => setSkinsReady(true), 1000));
     }
   }, [reload]);
 
   let headerText = weaponName.replaceAll('"', '') + " Skins";
 
-  if (!skinsReady) {
-    return <LoadingScreen />;
-  } else {
-    return (
-      <SafeAreaView style={styles.container}>
-        <PageHead headText={headerText} />
-        <FlatList
-          data={loadedSkins}
-          numColumns={3}
-          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-          contentContainerStyle={styles.flatListContent}
-          renderItem={({ item }) => <Tile name={item.name} icon={item.icon} SkinUuid={item.SkinUuid} isOwned={item.isOwned} />}
-        />
-      </SafeAreaView>
-    );
+  function NextPage() {
+    if (currentpage != totalPages) {
+      setOffset(offset+listSize.current);setCurrentPage(currentpage+1)
+    }
   }
+
+  function PrevPage() {
+    if (currentpage != 1) {
+    setOffset(offset-listSize.current);setCurrentPage(currentpage-1)
+    }
+  }
+
+  const renderItem = ({ item }) => <Tile name={item.name} icon={item.icon} SkinUuid={item.SkinUuid} isOwned={item.isOwned} />
+  let skinsList
+if (!skinsReady) {
+skinsList = <LoadingScreen />;
+}
+else {
+skinsList = 
+<FlatList
+data={loadedSkins}
+numColumns={3}
+ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+contentContainerStyle={styles.flatListContent}
+renderItem={renderItem}
+keyExtractor={(item) => item.SkinUuid}
+/>
+}
+return (
+  <SafeAreaView style={styles.container}>
+    <PageHead headText={headerText} />
+    {skinsList}
+    <View style = {{flexDirection: "row", alignContent:"space-around", justifyContent: "space-between"}}>
+    <TouchableOpacity onPress={PrevPage}><Ionicons name="arrow-back-outline"  color={appColors.WHITE} size = {(windowHeight+windowWidth)/11} /></TouchableOpacity>
+    <Text style = {styles.numText}>{currentpage}/{totalPages}</Text>
+    <TouchableOpacity onPress={NextPage}><Ionicons name="arrow-forward-outline"  color={appColors.WHITE} size = {(windowHeight+windowWidth)/11} /></TouchableOpacity>
+    </View>
+  </SafeAreaView>
+);
 };
 
 export default SkinsScreen;
@@ -110,6 +139,12 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     flex: 1,
+  },
+  numText: {
+    fontFamily: "RobotMain",
+    color: appColors.WHITE,
+    fontSize: (windowHeight + windowWidth) / 60,
+    textAlign: "auto"
   },
 });
 

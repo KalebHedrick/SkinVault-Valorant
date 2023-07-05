@@ -276,3 +276,61 @@ export async function checkCardSkin(cardUUID) { //returns true if 'skinUUID' exi
     }
      return await checkCard();
   }
+  /************************************************ */
+// FUNCTIONS FOR BUDDY STORAGE
+/************************************************** */
+export async function checkBuddySkins() { //initiates creation of Buddy if it does not already exist
+  checkBuddy = () => {
+getValueFor("Buddy",2).then(res => {
+  if (!res || typeof(res) == undefined) {
+    saveString("Buddy","noData");
+  }
+}).then(() => {return true})
+}
+return await checkBuddy();
+}
+export async function addBuddySkin(buddyUUID) {
+  addBuddy= () => {
+  getValueFor("Buddy",3).then(res => {
+    let newBuddy
+    if (res == "noData") {
+       newBuddy = buddyUUID;
+    }
+    else {
+   newBuddy = res.concat("," + buddyUUID);
+    }
+    saveString("Buddy",newBuddy);
+  })
+}
+return await addBuddy(buddyUUID);
+}
+export async function deleteBuddySkin(buddyUUID) {
+  deleteBuddy = () => {
+    getValueFor("Buddy",3).then(res => {
+    let dataArray = res.split(",");
+    dataArray = dataArray.filter(e => e !== buddyUUID);
+    let newData;
+    if (dataArray.length == 0) {
+      newData = "noData";
+    }
+    else {
+    newData = dataArray.join(",");
+    }
+     saveString("Buddy",newData);
+    })
+  }
+  return await deleteBuddy(buddyUUID);
+}
+export async function checkBuddySkin(buddyUUID) { //returns true if 'skinUUID' exists in Buddy, false otherwise
+   checkBuddy =async () => {
+      let dataArray = await getValueFor("Buddy",1)
+      dataArray = dataArray.split(",")
+      for(const element of dataArray) {
+        if(element == buddyUUID) {
+          return true;
+        }
+      }
+      return false;
+    }
+     return await checkBuddy();
+  }

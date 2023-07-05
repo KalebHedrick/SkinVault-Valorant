@@ -20,7 +20,7 @@ return (
         <PageHead headText="Settings"/>
         <View style= {sty.buttonContainer}>
        <TouchableOpacity onPress = {clearAsyncStorage} style = {sty.button}><Text style = {sty.optionText}>Clear Vault</Text></TouchableOpacity> 
-       <TouchableOpacity onPress={{}} style = {sty.button}><Text style = {sty.optionText}>Change Progress Wheel Color</Text></TouchableOpacity> 
+       
        <TouchableOpacity style = {sty.button}><Text style = {sty.optionText}>Donate</Text></TouchableOpacity> 
        </View>
     </SafeAreaView>

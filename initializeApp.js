@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { useState, useEffect, useRef } from 'react';
-import { FetchAllWeaponsData, FetchWeaponbyUUID, save, getValueFor, FetchWeaponSkinbyUUID, checkVaultSkins, checkCardSkins } from './fetchData.js';
+import { FetchAllWeaponsData, FetchWeaponbyUUID, save, getValueFor, FetchWeaponSkinbyUUID, checkVaultSkins, checkCardSkins, checkBuddySkins } from './fetchData.js';
 import HomeScreen from './screens/HomeScreen.js';
 import LoadingScreen from './screens/LoadingScreen.js';
 
@@ -16,7 +16,7 @@ const AppRun = ({navigation}) => { //Called when the app starts from the main ap
           save(element.displayName, element.uuid); //save data for each weapon
         }
       }).then(() => {
-        checkVaultSkins().then(() => checkCardSkins()).then(isLoading(false))})})
+        checkVaultSkins().then(() => checkCardSkins()).then(() => checkBuddySkins()).then(isLoading(false))})})
         
     },[]);
   
