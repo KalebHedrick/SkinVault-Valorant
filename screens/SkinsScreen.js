@@ -12,6 +12,7 @@ import LoadingScreen from './LoadingScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PageHead } from '../displayComponents.js';
 import Ionicons from '@expo/vector-icons/Ionicons'
+import { ForeignObject } from 'react-native-svg';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
@@ -52,19 +53,16 @@ const SkinsScreen = props => {
     if (weaponName !== "Initial") {
       getValueFor(weaponName.replaceAll('"', '')).then(res => FetchWeaponbyUUID(res)).then(res => {
         res = res.data.skins;
-        let counter = 0;
-        for (const element of res) {
-          console.log(typeof(element.contentTierUuid))
-          if (element.contentTierUuid == null) {
-            
-          }
-          else {
-            counter++;
+        for (let i = 0; i < res.length; i++) {
+          let element = res[i];
+          if (typeof(element.contentTierUuid) == 'object') {
+            res.splice(i, 1);
           }
         }
-        setTotalPages(Math.ceil(counter/listSize.current));
-        
-        for(let i = offset; i < offset+(listSize.current); i++) {
+       
+        setTotalPages(Math.ceil(res.length/listSize.current));
+       for(let i = offset; i < offset + listSize.current; i++) {
+          
           if (i < res.length) {
             let element = res[i];
           let skinName = element.displayName;
@@ -72,15 +70,16 @@ const SkinsScreen = props => {
           if (iconPNG === null) {
             iconPNG = element.levels[0].displayIcon;
           }
+          
           if (element.contentTierUuid !== null) {
+            
             checkVaultSkin(element.uuid).then(checkOwned => {
               skins_loading.push({ name: element.displayName, icon: iconPNG, SkinUuid: element.uuid, isOwned: checkOwned });
               setLoadedSkins(skins_loading);
-            });
-          }
-        }
-      }
-      }).then(setTimeout(() => setSkinsReady(true), 1000));
+             });
+          }}}}
+          )
+          .then(setTimeout(() => setSkinsReady(true), 200));
     }
   }, [reload]);
 

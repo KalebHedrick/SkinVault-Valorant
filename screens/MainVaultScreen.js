@@ -27,7 +27,7 @@ const MainVaultScreen = ({navigation}) => {
         <MaterialCommunityIcons name="pistol" size={(windowHeight+windowWidth)/7} color={appColors.WHITE} />
         </TouchableOpacity>
 
-        <TouchableOpacity style = {styles.tile}>
+        <TouchableOpacity onPress={() => navigation.navigate("CardVault")} style = {styles.tile}>
         <Text style = {styles.tileText}>Cards</Text>
         <MaterialCommunityIcons name="cards-outline" size = {(windowHeight+windowWidth)/7} color={appColors.WHITE} />
         </TouchableOpacity>
@@ -35,7 +35,7 @@ const MainVaultScreen = ({navigation}) => {
         </View>
         <View style = {styles.tileContainer}>
 
-        <TouchableOpacity style = {styles.tile}><Text style = {styles.tileText}>Buddies</Text>
+        <TouchableOpacity onPress={() => navigation.navigate("BuddyVault")} style = {styles.tile}><Text style = {styles.tileText}>Buddies</Text>
         <FontAwesome5 name="key" size = {(windowHeight+windowWidth)/8} color={appColors.WHITE} />
         </TouchableOpacity>
 

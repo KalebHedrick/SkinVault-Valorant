@@ -27,7 +27,10 @@ import SettingsScreen from './screens/SettingsScreen';
 import GeneratorScreen from './screens/GeneratorScreen';
 import CardsScreen from './screens/CardsScreen';
 import BuddysScreen from './screens/BuddysScreen';
-import MainVaultScreen from './screens/MainVaultScreen'
+import MainVaultScreen from './screens/MainVaultScreen';
+import BuddyVaultScreen from './screens/BuddyVaultScreen';
+import CardVaultScreen from './screens/CardVaultScreen';
+import TutorialScreen from './screens/TutorialScreen';
 //FONTS
 let customFonts = {
   'RobotMain': require('./assets/fonts/RobotoMono-VariableFont_wght.ttf'),
@@ -66,7 +69,10 @@ const App = () => {
     <Drawer.Screen name = "Settings" component = {SettingsScreen} options = {{headerShown: false}}/>
     <Drawer.Screen name = "Generator" component = {GeneratorScreen} options = {{headerShown: false}}/>
     <Drawer.Screen name = "Cards" component = {CardsScreen} options = {{headerShown: false}}/>
+    <Drawer.Screen name = "CardVault" component = {CardVaultScreen} options = {{headerShown: false}}/>
     <Drawer.Screen name = "Buddys" component = {BuddysScreen} options = {{headerShown: false}}/>
+    <Drawer.Screen name = "BuddyVault" component = {BuddyVaultScreen} options = {{headerShown: false}}/>
+    <Drawer.Screen name = "Tutorial" component = {TutorialScreen} options = {{headerShown: false}}/>
     </Drawer.Navigator>
     
     </NavigationContainer>

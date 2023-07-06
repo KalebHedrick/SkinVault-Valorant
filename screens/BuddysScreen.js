@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, ScrollView, Button, Image, FlatList, TouchableOpacity } from 'react-native';
 import { useState, useEffect, useContext, useRef, useMemo } from 'react';
-import { FetchAllBuddyData, addBuddySkin, checkBuddySkin, deleteBuddySkin, getValueFor } from '../fetchData.js';
+import { FetchAllBuddyData, addBuddySkin, checkBuddySkinAsync, deleteBuddySkin, getValueFor } from '../fetchData.js';
 import React, {memo} from "react";
 import { Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -41,13 +41,13 @@ const BuddysScreen = props => {
         for(let i = offset; i < offset+(listSize.current); i++) {
           if (i < res.length) {
          let element = res[i];
-            checkBuddySkin(element.uuid).then(checkOwned => {
+            checkBuddySkinAsync(element.uuid).then(checkOwned => {
               buddys_loading.push({ name: element.displayName, icon: element.displayIcon, BuddyUuid: element.uuid, isOwned: checkOwned });
               setLoadedBuddys(buddys_loading);
             })
           }
         }
-      }).then(setTimeout(() => setBuddysReady(true), 1000));
+      }).then(setTimeout(() => setBuddysReady(true), 200));
       }, [reload]);
 
       function NextPage() {

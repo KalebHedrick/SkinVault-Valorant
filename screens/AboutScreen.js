@@ -17,7 +17,7 @@ const AboutScreen = () => {
       <View style={styles.info}>
         <LinearGradient colors={[appColors.RED, appColors.RED,appColors.RED, appColors.BLACK]} opacity={1} style={styles.gradient}>
           <Text style={styles.text}>
-            VaultSkin was created as a tool for easily keeping track of your Valorant skins. The app was developed by Kaleb Hedrick as a personal project.
+            VaultSkin was created as a tool for easily keeping track of your Valorant skins. Feel free to donate and request new features!
           </Text>
         </LinearGradient>
       </View>
@@ -26,6 +26,12 @@ const AboutScreen = () => {
       }} style={styles.githubLink}>
         <Ionicons name="logo-github" size={windowHeight / 8} color={appColors.WHITE} />
         <Text style={styles.text2}>https://github.com/KalebHedrick</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => {
+        Linking.openURL("https://ko-fi.com/kalebhedrick");
+      }} style={styles.githubLink}>
+        <Ionicons name="cash-outline" size={windowHeight / 9} color={appColors.WHITE} />
+        <Text style={styles.text2}>https://ko-fi.com/kalebhedrick</Text>
       </TouchableOpacity>
       <Image source={require('../assets/icon.png')} style={styles.logo} resizeMode="contain" />
     </SafeAreaView>
@@ -75,7 +81,7 @@ const styles = StyleSheet.create({
   },
   logo: {
    // width: windowWidth,
-    height: windowHeight / 2,
+    height: windowHeight / 3,
     alignSelf: "center",
     marginTop: 0,
     opacity:0.3,

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, ScrollView, Button, Image, FlatList, TouchableOpacity } from 'react-native';
 import { useState, useEffect, useContext, useRef, useMemo } from 'react';
-import { FetchAllCardData, addCardSkin, checkCardSkin, deleteCardSkin, getValueFor } from '../fetchData.js';
+import { FetchAllCardData, addCardSkin, checkCardSkinAsync, deleteCardSkin, getValueFor } from '../fetchData.js';
 import React, {memo} from "react";
 import { Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -41,13 +41,13 @@ const CardsScreen = props => {
         for(let i = offset; i < offset+(listSize.current); i++) {
           if (i < res.length) {
          let element = res[i];
-            checkCardSkin(element.uuid).then(checkOwned => {
+            checkCardSkinAsync(element.uuid).then(checkOwned => {
               cards_loading.push({ name: element.displayName, icon: element.displayIcon, CardUuid: element.uuid, isOwned: checkOwned });
               setLoadedCards(cards_loading);
             })
           }
         }
-      }).then(setTimeout(() => setCardsReady(true), 1000));
+      }).then(setTimeout(() => setCardsReady(true), 200));
       }, [reload]);
 
       function NextPage() {

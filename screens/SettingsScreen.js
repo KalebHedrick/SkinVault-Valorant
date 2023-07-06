@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,ScrollView,Button, Image, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View,ScrollView,Button, Image, FlatList, TouchableOpacity, Alert, Linking } from 'react-native';
 import { useState, useEffect, useContext, useRef } from 'react';
 import {addVaultSkin, checkVaultSkin, deleteVaultSkin, getValueFor, getVaultSize} from '../fetchData.js';
 import React from "react";
@@ -21,7 +21,8 @@ return (
         <View style= {sty.buttonContainer}>
        <TouchableOpacity onPress = {clearAsyncStorage} style = {sty.button}><Text style = {sty.optionText}>Clear Vault</Text></TouchableOpacity> 
        
-       <TouchableOpacity style = {sty.button}><Text style = {sty.optionText}>Donate</Text></TouchableOpacity> 
+       <TouchableOpacity onPress={() => {
+        Linking.openURL("https://ko-fi.com/kalebhedrick");}} style = {sty.button}><Text style = {sty.optionText}>Donate</Text></TouchableOpacity> 
        </View>
     </SafeAreaView>
 )
