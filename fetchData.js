@@ -16,7 +16,6 @@ export const FetchAllWeaponsData = async () => { //Return a promise with all wea
         );
         if (response.status == 200) { 
           
-        //  console.log("ALL WEAPON DATA FROM API RETRIEVED");
           return await response.json();
         }
         else {
@@ -263,7 +262,7 @@ export async function deleteCardSkin(cardUUID) {
   }
   return await deleteCard(cardUUID);
 }
-export async function checkCardSkin(cardUUID) { //returns true if 'skinUUID' exists in Card, false otherwise
+export async function checkCardSkinAsync(cardUUID) { //returns true if 'skinUUID' exists in Card, false otherwise
    checkCard =async () => {
       let dataArray = await getValueFor("Card",1)
       dataArray = dataArray.split(",")
@@ -276,6 +275,16 @@ export async function checkCardSkin(cardUUID) { //returns true if 'skinUUID' exi
     }
      return await checkCard();
   }
+  export function checkCardSkin(cardUUID, dataArray) { //returns true if 'skinUUID' exists in Card, false otherwise
+
+    dataArray = dataArray.split(",")
+    for(const element of dataArray) {
+      if(element == cardUUID) {
+        return true;
+      }
+    }
+    return false;
+}
   /************************************************ */
 // FUNCTIONS FOR BUDDY STORAGE
 /************************************************** */
@@ -321,9 +330,21 @@ export async function deleteBuddySkin(buddyUUID) {
   }
   return await deleteBuddy(buddyUUID);
 }
-export async function checkBuddySkin(buddyUUID) { //returns true if 'skinUUID' exists in Buddy, false otherwise
-   checkBuddy =async () => {
-      let dataArray = await getValueFor("Buddy",1)
+export async function checkBuddySkinAsync(buddyUUID) { //returns true if 'skinUUID' exists in Card, false otherwise
+  checkBuddy =async () => {
+     let dataArray = await getValueFor("Buddy",1)
+     dataArray = dataArray.split(",")
+     for(const element of dataArray) {
+       if(element == buddyUUID) {
+         return true;
+       }
+     }
+     return false;
+   }
+    return await checkBuddy();
+ }
+export function checkBuddySkin(buddyUUID, dataArray) { //returns true if 'skinUUID' exists in Buddy, false otherwise
+
       dataArray = dataArray.split(",")
       for(const element of dataArray) {
         if(element == buddyUUID) {
@@ -331,6 +352,5 @@ export async function checkBuddySkin(buddyUUID) { //returns true if 'skinUUID' e
         }
       }
       return false;
-    }
-     return await checkBuddy();
+    
   }
