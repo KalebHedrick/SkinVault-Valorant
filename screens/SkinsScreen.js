@@ -16,8 +16,8 @@ const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
 const SkinsScreen = props => {
-  const isFocused = useIsFocused();
-  const [weaponName, setWeaponName] = useState("Initial");
+  const isFocused = useIsFocused(); 
+  const [weaponName, setWeaponName] = useState("Initial"); //initial weapons used
   const [loadedSkins, setLoadedSkins] = useState([]);
   const [reload, hasReloaded] = useState(true);
   const [skinsReady, setSkinsReady] = useState(false);
