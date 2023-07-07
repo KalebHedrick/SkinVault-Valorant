@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     
   },
   pageText: {
+    fontFamily: "RobotMain",
     color: appColors.WHITE,
     textAlign:"center",
     alignSelf:"center",
