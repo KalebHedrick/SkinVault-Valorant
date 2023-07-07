@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     
   },
   pageText: {
-    fontFamily: "RobotMain",
+    fontFamily: "RobotMain_BOLD",
     color: appColors.WHITE,
     textAlign:"center",
     alignSelf:"center",
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   },
   tutorialText: {
     color: appColors.WHITE,
-    fontFamily: "RobotMain",
+    fontFamily: "RobotMain_BOLD",
     alignSelf:"center",
     textAlign:"center",
     fontSize:1000
