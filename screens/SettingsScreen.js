@@ -55,7 +55,7 @@ const sty = StyleSheet.create({
 
     },
     optionText: {
-        fontFamily: "RobotMain",
+        fontFamily: "RobotMain_BOLD",
         fontSize: (windowHeight + windowWidth) / 70,
         color: appColors.WHITE,
         textAlign: "center",

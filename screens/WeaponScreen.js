@@ -94,7 +94,7 @@ const Tile = props => {
         });
       }}
     >
-      <Text style={{ fontFamily: "RobotMain", color: appColors.WHITE }}>{props.name}</Text>
+      <Text style={{ fontFamily: "RobotMain_BOLD", color: appColors.WHITE }}>{props.name}</Text>
       <Image style={styles.tinyLogo} source={{ uri: props.icon }} />
     </TouchableOpacity>
   );

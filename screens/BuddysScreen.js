@@ -112,17 +112,17 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   tileText: {
-    fontFamily: "RobotMain",
+    fontFamily: "RobotMain_BOLD",
     color: appColors.WHITE,
     fontSize: (windowHeight + windowWidth) / 120,
     minWidth: "50%",
     textAlign: "center",
   },
   numText: {
-    fontFamily: "RobotMain",
+    fontFamily: "RobotMain_BOLD",
     color: appColors.WHITE,
-    fontSize: (windowHeight + windowWidth) / 60,
-    textAlign: "auto"
+    fontSize: (windowHeight + windowWidth) / 40,
+    alignSelf:"center"
   },
   tinyLogo: {
     resizeMode: "contain",

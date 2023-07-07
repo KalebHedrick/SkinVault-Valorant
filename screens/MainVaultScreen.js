@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
       
     },
     tileText: {
-      fontFamily: "RobotMain",
+      fontFamily: "RobotMain_BOLD",
       color: appColors.WHITE,
       fontSize: (windowHeight + windowWidth) / 40,
       minWidth: "50%",
