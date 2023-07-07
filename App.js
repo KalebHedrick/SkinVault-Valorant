@@ -56,6 +56,7 @@ const App = () => {
       drawerType: "front",
       }
       }
+      /**NAVIGATION SCREENS */
     >
     <Drawer.Screen name = "Startup" component = {AppRun} options = {{headerShown: false}}/>
     <Drawer.Screen name = "Home" component = {HomeScreen} options = {{headerShown: false}}/>

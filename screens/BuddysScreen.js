@@ -16,19 +16,18 @@ const windowWidth = Dimensions.get('window').width;
 
 const BuddysScreen = props => {
   const isFocused = useIsFocused();
-  const [loadedBuddys, setLoadedBuddys] = useState([]);
-  const [reload, hasReloaded] = useState(true);
-  const [buddysReady, setBuddysReady] = useState(false);
-  const [offset, setOffset] = useState(0);
-  const [totalPages, setTotalPages] = useState(1);
-  const [currentpage, setCurrentPage] = useState(1);
+  const [loadedBuddys, setLoadedBuddys] = useState([]); //array of buddy objects
+  const [reload, hasReloaded] = useState(true); //reload page state
+  const [buddysReady, setBuddysReady] = useState(false); //buddys have been loaded into array
+  const [offset, setOffset] = useState(0); //tile offset to only render specific tiles from array
+  const [totalPages, setTotalPages] = useState(1); //state for total pages
+  const [currentpage, setCurrentPage] = useState(1); //current page number
   const listSize = useRef(12);
   useEffect(() => {                  //effect for navigation opening the page or offset being changed, calling a reload.
     if (isFocused) {
       setLoadedBuddys([]);
         hasReloaded(!reload);
         setBuddysReady(false);
-      
     }
   }, [isFocused, offset]);
 
