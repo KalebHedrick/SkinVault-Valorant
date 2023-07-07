@@ -4,6 +4,7 @@ import appColors from '../assets/appColors.js';
 import { Dimensions } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { PageHead } from '../displayComponents.js';
+import { Platform } from 'react-native';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 const TutorialScreen = () => {
@@ -37,7 +38,7 @@ const TutorialScreen = () => {
     <PageHead headText={"Tutorial"}/>
       <Image source={images[currentPage-1]} style={styles.image} resizeMode="contain" />
       <View style = {styles.textContainer}>
-      <Text adjustsFontSizeToFit={true} style = {styles.tutorialText}>{Tutorialtext[currentPage-1]}</Text>
+      <Text adjustsFontSizeToFit={true} numberOfLines={3} style = {styles.tutorialText}>{Tutorialtext[currentPage-1]}</Text>
       </View>
       <View style={styles.buttonContainer}>
         
@@ -83,13 +84,12 @@ const styles = StyleSheet.create({
     backgroundColor: appColors.RED,
     borderRadius: 5,
     justifyContent:"center",
-    borderColor:appColors.WHITE,
-    borderWidth:5
+   
   },
   textContainer: {
     height:"10%",
     width:"80%",
-    
+    justifyContent:"center"
   },
   pageText: {
     fontFamily: "RobotMain_BOLD",
