@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "skinCollection",
+    "name": "SkinVault: Valorant",
     "slug": "skinCollection",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,9 +15,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "g00mie.SkinVault"
     },
     "android": {
+      "package": "g00mie.SkinVault",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -25,6 +28,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d52adef1-fa46-44fd-9c59-5f8a3d5de6c4"
+      }
     }
   }
 }
