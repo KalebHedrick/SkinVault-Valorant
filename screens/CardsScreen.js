@@ -139,7 +139,7 @@ const Tile = props => {
   const firstLoad = useRef(true);
   const [tileColor, setTileColor] = useState(owned ? appColors.GREEN : appColors.RED);
 
-  useEffect(() => {
+  useEffect(() => { //add or delete to vault on click
     if (firstLoad.current) {
       firstLoad.current = false;
     } else {

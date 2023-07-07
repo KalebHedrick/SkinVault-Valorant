@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 /******************************************************
  * 
  * FETCH FUNCTIONS FOR THE API
+ * 
  ******************************************************/
 export const FetchAllWeaponsData = async () => { //Return a promise with all weapons
     try {

@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View, ScrollView, Button, Image, FlatList, TouchableOpacity, Animated, Easing } from 'react-native';
-import { useState, useEffect, memo } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Animated, Easing } from 'react-native';
+import { useState, useEffect } from 'react';
 import * as React from 'react';
 import { Dimensions } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { NavigationContainer, DrawerActions, useNavigation, useIsFocused } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { Divider } from 'react-native-paper';
 import appColors from './assets/appColors.js';
 

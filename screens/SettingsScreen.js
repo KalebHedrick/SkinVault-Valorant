@@ -27,7 +27,7 @@ return (
     </SafeAreaView>
 )
 }
-clearAsyncStorage = async() => {
+clearAsyncStorage = async() => { //clear storage and make alert function
     Alert.alert('Delete Vault', 'Are you sure you want to clear your vault? This action cannot be undone.', [
         {
           text: 'Yes',

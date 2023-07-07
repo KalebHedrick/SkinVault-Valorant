@@ -36,7 +36,7 @@ const GeneratorScreen = ({ navigation }) => {
         
     }
   },[isFocused]);
-  useEffect(() => {
+  useEffect(() => { //setup data for generator
     getValueFor("allData").then(res => {
       res = JSON.parse(res);
       res = res.data;
@@ -50,7 +50,7 @@ const GeneratorScreen = ({ navigation }) => {
       setEndSelection(tempUuid.length-1);
     });
   }, []);
-  useEffect(() => {
+  useEffect(() => { //toggle button border color
     if (vaultOnly) {
         setOwnedButtonBorderColor(appColors.GREEN)
     }

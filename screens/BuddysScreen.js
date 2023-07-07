@@ -31,7 +31,7 @@ const BuddysScreen = props => {
     }
   }, [isFocused, offset]);
 
-  useEffect(() => {
+  useEffect(() => { //loads buddies
     let buddys_loading = [];
       FetchAllBuddyData().then(res => {
         res = res.data;
@@ -45,7 +45,7 @@ const BuddysScreen = props => {
             })
           }
         }
-      }).then(setTimeout(() => setBuddysReady(true), 200));
+      }).then(setTimeout(() => setBuddysReady(true), 200)); //displays loading screen for images to have time to render
       }, [reload]);
 
       function NextPage() {
