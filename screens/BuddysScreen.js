@@ -5,7 +5,6 @@ import React, {memo} from "react";
 import { Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import appColors from '../assets/appColors.js';
-import JsonQuery from 'json-query';
 import { FetchWeaponbyUUID } from '../fetchData.js';
 import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 import LoadingScreen from './LoadingScreen.js';

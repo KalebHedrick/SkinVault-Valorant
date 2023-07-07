@@ -1,18 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View,ScrollView,Button,Dimensions, StatusBar,Image } from 'react-native';
-import { NavigationContainer, useIsFocused } from '@react-navigation/native';
+import { StyleSheet, Text, View,Dimensions, StatusBar,Image } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFonts} from "expo-font";
-import AppLoading from 'expo-app-loading';
 import appColors from './assets/appColors'
-import { LinearGradient } from 'expo-linear-gradient';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { createContext } from 'react';
 import { Divider } from 'react-native-paper';
 import Ionicons from '@expo/vector-icons/Ionicons'
-
+import { LogBox } from 'react-native';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 // Screen components
@@ -32,13 +28,14 @@ import BuddyVaultScreen from './screens/BuddyVaultScreen';
 import CardVaultScreen from './screens/CardVaultScreen';
 import TutorialScreen from './screens/TutorialScreen';
 //FONTS
+
 let customFonts = {
   'RobotMain': require('./assets/fonts/RobotoMono-VariableFont_wght.ttf'),
   'RobotMain_BOLD': require('./assets/fonts/RobotoMono-Bold.ttf'),
 };
-
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 const App = () => {
-  StatusBar.setBarStyle(appColors.RED, true);
+  
   // load fonts
     const [isLoaded] = useFonts(customFonts);
   
@@ -47,6 +44,7 @@ const App = () => {
   }
   return (
     <NavigationContainer>
+    <StatusBar animated={true} backgroundColor={appColors.BLACK} hidden/>
        <Drawer.Navigator
       initialRouteName="Startup"
       drawerContent={(props) => <DrawerContent {...props} />}

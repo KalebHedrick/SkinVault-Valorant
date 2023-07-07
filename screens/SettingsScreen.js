@@ -5,24 +5,24 @@ import React from "react";
 import { Dimensions, } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import appColors from '../assets/appColors.js';
-import JsonQuery from 'json-query';
 import { FetchWeaponbyUUID } from '../fetchData.js';
-import { NavigationContainer, useIsFocused } from '@react-navigation/native';
+import { NavigationContainer, useIsFocused, useNavigation } from '@react-navigation/native';
 import LoadingScreen from './LoadingScreen.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PageHead } from '../displayComponents.js';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
-const SettingsScreen = ({}) => {
+const SettingsScreen = () => {
+    const navigation = useNavigation();
 return (
     <SafeAreaView style = {sty.container}>
     
         <PageHead headText="Settings"/>
         <View style= {sty.buttonContainer}>
        <TouchableOpacity onPress = {clearAsyncStorage} style = {sty.button}><Text style = {sty.optionText}>Clear Vault</Text></TouchableOpacity> 
-       
+       <TouchableOpacity onPress = {() => navigation.navigate("Tutorial")} style = {sty.button}><Text style = {sty.optionText}>View Tutorial</Text></TouchableOpacity> 
        <TouchableOpacity onPress={() => {
-        Linking.openURL("https://ko-fi.com/kalebhedrick");}} style = {sty.button}><Text style = {sty.optionText}>Donate</Text></TouchableOpacity> 
+        Linking.openURL("https://ko-fi.com/kalebhedrick");}} style = {sty.button}><Text style = {sty.optionText}>Support the Creator</Text></TouchableOpacity> 
        </View>
     </SafeAreaView>
 )

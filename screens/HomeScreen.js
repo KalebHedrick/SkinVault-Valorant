@@ -5,7 +5,6 @@ import React from "react";
 import { Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import appColors from '../assets/appColors.js';
-import JsonQuery from 'json-query';
 import { FetchWeaponbyUUID, FetchAllBuddyData } from '../fetchData.js';
 import { NavigationContainer, useIsFocused, useNavigation } from '@react-navigation/native';
 import LoadingScreen from './LoadingScreen.js';
@@ -17,7 +16,7 @@ import { Divider } from 'react-native-paper';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 //WHEEL SCALARS
-let wheelSize = (windowHeight + (windowWidth/2)) / 7;
+let wheelSize = (windowHeight + (windowWidth/2.5)) / 7;
 let wheelWidth = (windowHeight + (windowWidth/2)) / 40;
 let outerWheelTextSize = (windowHeight + windowWidth) / 50;
 let innerWheelTextSize = (windowHeight + windowWidth) / 60;
