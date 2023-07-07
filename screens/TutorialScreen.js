@@ -65,8 +65,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '60%',
     resizeMode: 'contain',
-    borderColor: appColors.RED,
-    borderWidth:5
+    
   },
   buttonContainer: {
     width:"100%",
