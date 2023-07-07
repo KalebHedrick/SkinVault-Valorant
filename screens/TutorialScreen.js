@@ -62,9 +62,8 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: '50%',
+    height: '60%',
     resizeMode: 'contain',
-    marginTop:windowHeight/50,
     borderColor: appColors.RED,
     borderWidth:5
   },
