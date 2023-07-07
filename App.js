@@ -44,7 +44,7 @@ const App = () => {
   }
   return (
     <NavigationContainer>
-    <StatusBar animated={true} backgroundColor={appColors.BLACK} hidden/>
+    <StatusBar animated={true} backgroundColor={appColors.BLACK}/>
        <Drawer.Navigator
       initialRouteName="Startup"
       drawerContent={(props) => <DrawerContent {...props} />}
