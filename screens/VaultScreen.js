@@ -77,7 +77,7 @@ const Tile = props => {
     <TouchableOpacity
       style={styles.square}>
       <Text style={{ fontFamily: "RobotMain_BOLD", color: appColors.WHITE, minWidth:"50%", fontSize: (windowHeight + windowWidth) / 120, }}>{props.name}</Text>
-      <Image style={styles.tinyLogo} source={{ uri: props.icon }} />
+      <Image fadeDuration = {0} style={styles.tinyLogo} source={{ uri: props.icon }} />
     </TouchableOpacity>
   );
 };

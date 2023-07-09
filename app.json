@@ -8,7 +8,7 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "stretch",
+      "resizeMode": "cover",
       "backgroundColor": "#0F1922"
     },
     "assetBundlePatterns": [
@@ -23,7 +23,7 @@
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#0F1922"
       }
     },
     "web": {

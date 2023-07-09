@@ -159,7 +159,7 @@ const Tile = props => {
       onPress={() => setOwned(!owned)}
     >
       <Text style={styles.tileText}>{props.name}</Text>
-      <Image style={styles.tinyLogo} source={{ uri: props.icon }} />
+      <Image fadeDuration = {0} style={styles.tinyLogo} source={{ uri: props.icon }} />
     </TouchableOpacity>
   );
 };

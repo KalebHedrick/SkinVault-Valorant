@@ -23,20 +23,20 @@ const MainVaultScreen = ({navigation}) => {
 
         <TouchableOpacity onPress={() => navigation.navigate("SkinVault")} style = {styles.tile}>
         <Text style = {styles.tileText}>Skins</Text>
-        <MaterialCommunityIcons name="pistol" size={(windowHeight+windowWidth)/7} color={appColors.WHITE} />
+        <MaterialCommunityIcons name="pistol" size={(windowHeight+windowWidth)/9} color={appColors.WHITE} />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => navigation.navigate("CardVault")} style = {styles.tile}>
         <Text style = {styles.tileText}>Cards</Text>
-        <MaterialCommunityIcons name="cards-outline" size = {(windowHeight+windowWidth)/7} color={appColors.WHITE} />
+        <MaterialCommunityIcons name="cards-outline" size = {(windowHeight+windowWidth)/9} color={appColors.WHITE} />
         </TouchableOpacity>
-
+        <TouchableOpacity onPress={() => navigation.navigate("BuddyVault")} style = {styles.tile}><Text style = {styles.tileText}>Buddies</Text>
+        <Ionicons name="key" size = {(windowHeight+windowWidth)/9} color={appColors.WHITE} />
+        </TouchableOpacity>
         </View>
         <View style = {styles.tileContainer}>
 
-        <TouchableOpacity onPress={() => navigation.navigate("BuddyVault")} style = {styles.tile}><Text style = {styles.tileText}>Buddies</Text>
-        <FontAwesome5 name="key" size = {(windowHeight+windowWidth)/8} color={appColors.WHITE} />
-        </TouchableOpacity>
+        
 
         </View>
         </SafeAreaView>
@@ -49,11 +49,11 @@ const styles = StyleSheet.create({
     },
     tileContainer: {
       paddingTop: windowHeight/30,
-      width: "100%",
-      flexDirection: "row",
-      alignContent:"center",
-        alignItems:"center",
-        justifyContent:"center"
+      height: "100%",
+      width: "70%",
+      flexDirection: "column",
+      alignContent: "space-around",
+      alignSelf:"center"
     },
     tile: {
       padding: 10,

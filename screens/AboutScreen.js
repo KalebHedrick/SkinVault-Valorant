@@ -33,7 +33,7 @@ const AboutScreen = () => {
         <Ionicons name="cash-outline" size={windowHeight / 9} color={appColors.WHITE} />
         <Text style={styles.text2}>https://ko-fi.com/kalebhedrick</Text>
       </TouchableOpacity>
-      <Image source={require('../assets/icon.png')} style={styles.logo} resizeMode="contain" />
+      <Image fadeDuration = {2000} source={require('../assets/icon.png')} style={styles.logo} resizeMode="contain" />
     </SafeAreaView>
   );
 }
