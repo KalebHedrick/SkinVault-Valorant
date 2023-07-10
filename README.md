@@ -4,7 +4,7 @@
 Track, Manage, Generate, and Collect Valorant skins.
 
 
-![Logo](https://github.com/KalebHedrick/VaultSkin-Valorant/blob/main/assets/icon.png)
+![Logo](https://github.com/KalebHedrick/VaultSkin-Valorant/blob/main/assets/favicon.png)
 
 
 ## Author
@@ -38,5 +38,5 @@ https://github.com/KalebHedrick/VaultSkin-Valorant/blob/main/assets/tutorialPics
 
 ## Download App
 
-[https://github.com/KalebHedrick/VaultSkin-Valorant/blob/main/assets/googleplay.png](addLink)
+[(https://github.com/KalebHedrick/VaultSkin-Valorant/blob/main/assets/googleplay.png)](https://github.com/KalebHedrick/VaultSkin-Valorant/blob/main/assets/googleplay.png)
 
