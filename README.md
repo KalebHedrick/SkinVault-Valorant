@@ -13,9 +13,14 @@ Track, Manage, Generate, and Collect Valorant skins.
 
 
 
+## Full Description
+
+SkinVault is an app for users to track, manage, generate, and collect Valorant skins. Users can see how much of the Valorant skin backpack they own, as well as track their player cards and gun buddies. This app uses the Valorant API to get a full listing of all the in-game content. SkinVault will have the latest skins on their app as they are released in the game.
+
+
 ## Demo
 
-![Logo](https://github.com/KalebHedrick/VaultSkin-Valorant/blob/main/assets/tutorialPics/tutorial2.gif)
+![Logo](https://github.com/KalebHedrick/VaultSkin-Valorant/blob/main/assets/tutorialPics/tutorial1.gif)
 
 
 ## Features
