@@ -15,7 +15,7 @@ Track, Manage, Generate, and Collect Valorant skins.
 
 ## Demo
 
-![Logo](https://github.com/KalebHedrick/VaultSkin-Valorant/blob/main/assets/tutorialPics/tutorial1.gif)
+![Logo](https://github.com/KalebHedrick/VaultSkin-Valorant/blob/main/assets/tutorialPics/tutorial2.gif)
 
 
 ## Features
