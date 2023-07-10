@@ -17,7 +17,7 @@ const AboutScreen = () => {
       <View style={styles.info}>
         <LinearGradient colors={[appColors.RED, appColors.RED,appColors.RED, appColors.BLACK]} opacity={1} style={styles.gradient}>
           <Text style={styles.text}>
-            VaultSkin was created as a tool for easily keeping track of your Valorant skins. Feel free to donate and request new features!
+            SkinVault was created as a tool for easily keeping track of your Valorant skins. Feel free to donate and request new features!
           </Text>
         </LinearGradient>
       </View>
