@@ -38,5 +38,5 @@ https://github.com/KalebHedrick/VaultSkin-Valorant/blob/main/assets/tutorialPics
 
 ## Download App
 
-[(https://github.com/KalebHedrick/VaultSkin-Valorant/blob/main/assets/googleplay.png)](https://github.com/KalebHedrick/VaultSkin-Valorant/blob/main/assets/googleplay.png)
+[![name](https://github.com/KalebHedrick/VaultSkin-Valorant/blob/main/assets/googleplay.png)](https://twitter.com/home)
 
