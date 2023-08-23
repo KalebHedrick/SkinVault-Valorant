@@ -43,5 +43,5 @@ SkinVault is an app for users to track, manage, generate, and collect Valorant s
 
 ## Download App
 
-[![name](https://github.com/KalebHedrick/VaultSkin-Valorant/blob/main/assets/googleplay.png)](https://twitter.com/home)
+[![name](https://github.com/KalebHedrick/VaultSkin-Valorant/blob/main/assets/googleplay.png)]([https://twitter.com/home](https://play.google.com/store/apps/details?id=g00mie.SkinVault&hl=en_US&gl=US)https://play.google.com/store/apps/details?id=g00mie.SkinVault&hl=en_US&gl=US)
 
